@@ -8,7 +8,7 @@ export const Navbar = () => {
             <h2 style={{position: "absolute", left: "30vh", top: "2vh"}}>Ethersearch</h2>
             <Link to="/">Home</Link>
             <Link to="/Block"> Block </Link>
-            <Link to="/LatestTransactions"> LatestTransactions</Link>
+            <Link to="/LatestTransactions"> Latest Transactions</Link>
             <Link to="/Transactions"> Transactions </Link>
             <Link to="/TokenHoldings"> Token Holdings</Link>
             <Link to="/NFTHoldings"> NFT Holdings</Link>

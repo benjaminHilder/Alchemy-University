@@ -7,6 +7,21 @@
   pointer-events: none;
 }
 
+a {
+  color: inherit;
+  font-size: 2vh;
+  font-weight: bold;
+  padding:0.5vh;
+  margin:1vh;
+  text-decoration: none;
+  outline: auto;
+}
+
+a:hover {
+  background-color: black;
+  color: white;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
