@@ -60,10 +60,7 @@ export const Home = () => {
 )
 
     return (
-    <div>
-        <div>
-            <h1>HOME</h1>
-        </div>
+    <div class="main">
         <div class="homeTitles"> 
             <h2 className="homeLatestInfoTitle">Latest Blocks</h2>
             <h2 className="homeLatestInfoTitle">Latest Transactions</h2>

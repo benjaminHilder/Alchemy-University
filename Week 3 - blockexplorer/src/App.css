@@ -43,6 +43,11 @@ a:hover {
   color: #61dafb;
 }
 
+.main {
+  position: relative;
+  top: 6vh;
+}
+
 .homeTitles {
   display:flex;
   justify-content: flex-start;
@@ -52,7 +57,6 @@ a:hover {
 }
 
 .homeLatestInfoTitle {
-
   width: 52vh;
 }
 
@@ -89,45 +93,6 @@ a:hover {
   display:flex;
   flex-direction: row;
   white-space: pre-wrap;
-}
-
-.homeLatestInnerElement {
-  display: flex;
-  flex-direction: column;
-}
-
-.homeLatestInfoInner {
-  display:flex;
-  flex-direction: row;
-  justify-content: space-around;
-
-  position: absolute;
-  width: 100%; /*to fill in 100% of parent div*/
-  top: 8vh;
-  
-  
-  border-color: black;
-  border-style:solid;
-  border-radius: 1vh;
-}
-
-.homeLatestTransactionsInnerCenter {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  white-space: pre-wrap;
-
-  height: 15vh; 
-}
-
-.homeLatestTransactionsInnerCenterContent {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  white-space: pre-wrap;
-  height:4vh; /*space between top content and bottom*/
 }
 
 .homeLatestInfoButtons {
