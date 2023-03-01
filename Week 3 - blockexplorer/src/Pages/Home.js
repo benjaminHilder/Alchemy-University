@@ -17,6 +17,46 @@ function substring(text, start, end) {
     return text.substring(start, end)
 }
 
+function latestBlockEntries(blockNumber, miner, numberOfTransactions) {
+    return (
+        <div className="homeLatestInfoTemplate">
+
+            <h3 style={{width: "30%"}}>{blockNumber}</h3>
+
+            <div className="homeLatestInfoCenter" style={{width: "30%"}}> 
+                <h3>miner {substring(miner, 0, 7)}...</h3>
+                <h3>{numberOfTransactions} txns in ... secs</h3>
+            </div>
+
+            <div style={{width: "30%"}}>{/*styling*/}
+                <button className="homeLatestInfoButtons" >More Info</button>
+            </div>
+    
+        </div>)
+}
+
+function latestTransactionEntries(transactionAddress, transactionFrom, transactionTo) {
+    return (
+        <div className="homeLatestInfoTemplate" style={{gap: "17%"}}>
+            <h3>{substring(transactionAddress, 0, 12)}...</h3>
+
+            <div className="homeLatestInfoCenter">
+
+                <div className="homeLatestInfoCenterRow">
+                    <h3>from  </h3>
+                    <h3>{substring(transactionFrom, 0, 12)}...</h3>
+                </div>
+
+                <div className="homeLatestInfoCenterRow">
+                    <h3>to  </h3>
+                    <h3>{substring(transactionTo, 0, 12)}...</h3>
+                </div>
+            </div>
+
+            <button className="homeLatestInfoButtons">More Info</button>   
+        </div>)
+}
+
 export const Home = () => {
     const [blockNumber, setBlockNumber] = useState();
     const [block, setBlock] = useState();
@@ -60,97 +100,29 @@ export const Home = () => {
 
     return (
     <div class="main">
-
         <div className="homeLatestInfoAll">
             
             <div className="homeLatestArea">
                 <h2 className="homeLatestInfoTitle">Latest Blocks</h2>
             
                 <div className="homeLatestInfo"> {/*styling*/} 
-                    <div className="homeLatestInfoTemplate" style={{gap: "23%"}}>
-                        <h3>{blockNumber}</h3>
+                    
+                    {latestBlockEntries(blockNumber, miner, numberOfTransactions)}
 
-                        <div className="homeLatestInfoCenter"> 
-                            <h3>miner {substring(miner, 0, 7)}...</h3>
-                            <h3>{numberOfTransactions} txns in ... secs</h3>
-                        </div>
-
-                        <button className="homeLatestInfoButtons">More Info</button>
-                    </div>
-
-                    <div className="homeLatestInfoTemplate" style={{gap: "23%"}}>
-                        <h3>{blockNumber}</h3>
-
-                        <div className="homeLatestInfoCenter"> 
-                            <h3>miner {substring(miner, 0, 7)}...</h3>
-                            <h3>{numberOfTransactions} txns in ... secs</h3>
-                        </div>
-
-                        <button className="homeLatestInfoButtons">More Info</button>
-                    </div>
-
-                    <div className="homeLatestInfoTemplate" style={{gap: "23%"}}>
-                        <h3>{blockNumber}</h3>
-
-                        <div className="homeLatestInfoCenter"> 
-                            <h3>miner {substring(miner, 0, 7)}...</h3>
-                            <h3>{numberOfTransactions} txns in ... secs</h3>
-                        </div>
-
-                        <button className="homeLatestInfoButtons">More Info</button>
-                    </div>
-
-                    <div className="homeLatestInfoTemplate" style={{gap: "23%"}}>
-                        <h3>{blockNumber}</h3>
-
-                        <div className="homeLatestInfoCenter"> 
-                            <h3>miner {substring(miner, 0, 7)}...</h3>
-                            <h3>{numberOfTransactions} txns in ... secs</h3>
-                        </div>
-
-                        <button className="homeLatestInfoButtons">More Info</button>
-                    </div>
-
-                    <div className="homeLatestInfoTemplate" style={{gap: "23%"}}>
-                        <h3>{blockNumber}</h3>
-
-                        <div className="homeLatestInfoCenter"> 
-                            <h3>miner {substring(miner, 0, 7)}...</h3>
-                            <h3>{numberOfTransactions} txns in ... secs</h3>
-                        </div>
-
-                        <button className="homeLatestInfoButtons">More Info</button>
-                    </div>
                 </div>
             </div>
 
             <div className="homeLatestArea">
+                
                 <h2 className="homeLatestInfoTitle">Latest Transactions</h2>
 
                 <div className="homeLatestInfo"> {/*styling*/} 
-                    <div className="homeLatestInfoTemplate" style={{gap: "17%"}}>
-                        <h3>{substring(transactionAddress, 0, 12)}...</h3>
-        
-                        <div className="homeLatestInfoCenter">
-            
-                            <div className="homeLatestInfoCenterRow">
-                                <h3>from  </h3>
-                                <h3>{substring(transactionFrom, 0, 12)}...</h3>
-                            </div>
-                        <div className="homeLatestInfoCenterRow">
-                            <h3>to  </h3>
-                            <h3>{substring(transactionTo, 0, 12)}...</h3>
-                        </div>
-                    </div>
 
-                    <button className="homeLatestInfoButtons">More Info</button>   
-                    </div>
+                    {latestTransactionEntries(transactionAddress, transactionFrom, transactionTo)}
+
+                </div>
             </div>
         </div>
-           
-        </div>
-        
-
     </div>
     )
 }
