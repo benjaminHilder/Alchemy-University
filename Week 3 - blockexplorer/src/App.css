@@ -48,18 +48,6 @@ a:hover {
   top: 6vh;
 }
 
-.homeTitles {
-  display:flex;
-  justify-content: flex-start;
-
-  width: 100%;
-  gap: 33.5vh;
-}
-
-.homeLatestInfoTitle {
-  width: 52vh;
-}
-
 .homeLatestInfoAll {
   display:flex;
   flex-direction: row;
@@ -67,20 +55,30 @@ a:hover {
   gap: 2vh;
 }
 
+.homeLatestArea {
+  width: 40%;
+  display:flex;
+  flex-direction: column;
+}
+
+.homeLatestInfoTitle {
+  float: left;
+}
+
 .homeLatestInfo {
+  position: relative;
+  border: solid;
+  border-radius: 1vh;
+  border-color: black;
+  width:99%;
+  height: 130vh;
+}
+
+.homeLatestInfoTemplate {
   display:flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
-
-  position: relative;
-  width:40%;
-  height: 12vh;
-
-  border: solid;
-  border-radius: 1vh;
-  border-color: black;
 }
 
 .homeLatestInfoCenter {
