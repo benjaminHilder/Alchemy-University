@@ -64,52 +64,44 @@ export const Home = () => {
         <div>
             <h1>HOME</h1>
         </div>
-        <div className="homeLatestInfo">
-            <div className="homeLatestBlocks">
-                <h2 className="homeLatestInfoTitle">Latest Blocks</h2>
+        <div class="homeTitles"> 
+            <h2 className="homeLatestInfoTitle">Latest Blocks</h2>
+            <h2 className="homeLatestInfoTitle">Latest Transactions</h2>
+        </div>
+ 
+        <div className="homeLatestInfoAll">
+            <div className="homeLatestInfo" style={{gap: "18vh"}}>
+            
+                <h3>{blockNumber}</h3>
+
+                <div className="homeLatestInfoCenter"> 
+                    <h3>miner {substring(miner, 0, 7)}...</h3>
+                    <h3>{numberOfTransactions} txns in ... secs</h3>
+                </div>
+
+                <button className="homeLatestInfoButtons">More Info</button>
                 
-                <div className="homeLatestInfoInner">
-                    <h3>{blockNumber}</h3>
-
-                    <div className="homeLatestTransactionsInnerCenter">
-                        <div className="homeLatestTransactionsInnerCenterContent">
-                        </div>
-
-                        <div className="homeLatestTransactionsInnerCenterContent">
-                        </div>
-                        
-                        <h3>miner {substring(miner, 0, 7)}...</h3>
-                        <h3>{numberOfTransactions} txns in ... secs</h3>
-                    </div>
-
-                    <button className="homeLatestInfoButtons">More Info</button>
-                </div>
             </div>
 
-            <div className="homeLatestTransactions">
-                <h2 className="homeLatestInfoTitle">Latest Transactions</h2>
+            <div className="homeLatestInfo" style={{gap: "12.5vh"}}>  
 
-                <div className="homeLatestInfoInner">
-   
-                    <h3>{substring(transactionAddress, 0, 12)}...</h3>
-                    <div className="homeLatestTransactionsInnerCenter">
+                <h3>{substring(transactionAddress, 0, 12)}...</h3>
+
+                    <div className="homeLatestInfoCenter">
                         
-                            <div className="homeLatestTransactionsInnerCenterContent">
-                                <h3>from  </h3>
-                                <h3>{substring(transactionFrom, 0, 12)}...</h3>
-                            </div>
-                            <div className="homeLatestTransactionsInnerCenterContent">
-                                <h3>to  </h3>
-                                <h3>{substring(transactionTo, 0, 12)}...</h3>
-                            </div>
-
-                    </div>
+                        <div className="homeLatestInfoCenterRow">
+                            <h3>from  </h3>
+                            <h3>{substring(transactionFrom, 0, 12)}...</h3>
+                        </div>
+                        <div className="homeLatestInfoCenterRow">
+                            <h3>to  </h3>
+                            <h3>{substring(transactionTo, 0, 12)}...</h3>
+                        </div>
                     
-
-                    <button className="homeLatestInfoButtons">More Info</button>
-                </div>
-
-            </div>
+                    </div>
+                <button className="homeLatestInfoButtons">More Info</button>   
+        </div>
+           
         </div>
         
 

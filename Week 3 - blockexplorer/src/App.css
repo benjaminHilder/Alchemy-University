@@ -43,37 +43,57 @@ a:hover {
   color: #61dafb;
 }
 
+.homeTitles {
+  display:flex;
+  justify-content: flex-start;
+
+  width: 100%;
+  gap: 33.5vh;
+}
+
+.homeLatestInfoTitle {
+
+  width: 52vh;
+}
+
+.homeLatestInfoAll {
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2vh;
+}
+
 .homeLatestInfo {
   display:flex;
   flex-direction: row;
   justify-content: center;
-}
+  align-items: center;
 
-.homeLatestInfoTitle{
-  position:absolute;
-  left: 0vh;
-}
-
-.homeLatestBlocks {
-  display:flex;
-  flex-direction: column;
 
   position: relative;
   width:40%;
+  height: 12vh;
 
-  margin-right:1vh;
+  border: solid;
+  border-radius: 1vh;
+  border-color: black;
 }
 
-.homeLatestTransactions {
+.homeLatestInfoCenter {
   display:flex;
   flex-direction: column;
-  
+  justify-content: center;
+}
 
-  position: relative;
-  width:40%;
+.homeLatestInfoCenterRow {
+  display:flex;
+  flex-direction: row;
+  white-space: pre-wrap;
+}
 
-  margin-left:1vh;
-  padding: -10vh;
+.homeLatestInnerElement {
+  display: flex;
+  flex-direction: column;
 }
 
 .homeLatestInfoInner {
@@ -100,7 +120,6 @@ a:hover {
   white-space: pre-wrap;
 
   height: 15vh; 
-
 }
 
 .homeLatestTransactionsInnerCenterContent {
@@ -109,11 +128,29 @@ a:hover {
   flex-direction: row;
   white-space: pre-wrap;
   height:4vh; /*space between top content and bottom*/
-
 }
 
 .homeLatestInfoButtons {
   position: relative;
   top: 3vh;
   height: 2.5vh;
+  all:unset;
+  font-weight:bold;
+  outline: auto;
+
+  cursor: pointer;
+  display: inline-block;
+
+  padding-left: 0.5vh;
+  padding-right: 0.5vh;
+
+  width: 8vh;
+
+  height: 3vh;
+}
+
+.homeLatestInfoButtons:hover {
+  background-color: black;
+  color: white; 
+ 
 }
