@@ -12,48 +12,37 @@ const alchemy = new Alchemy(settings);
 //alchemy
 
 function substring(text, start, end) {
-    if (text === undefined) return
+    if (text == "undefined" ||text == undefined) return
     
     return text.substring(start, end)
 }
 
-function latestBlockEntries(blockNumber, miner, numberOfTransactions) {
+function latestEntries (leftData, centerTopData, centerBottomData) {
+    //easier to read
+    leftData = String(leftData);
+    centerTopData = String(centerTopData);
+    centerBottomData = String(centerBottomData)
+
     return (
         <div className="homeLatestInfoTemplate">
+            <h3 style={{width: "30%"}}>{substring(leftData, 0, 12)}...</h3>
 
-            <h3 style={{width: "30%"}}>{blockNumber}</h3>
-
-            <div className="homeLatestInfoCenter" style={{width: "30%"}}> 
-                <h3>miner {substring(miner, 0, 7)}...</h3>
-                <h3>{numberOfTransactions} txns in ... secs</h3>
-            </div>
-
-            <div style={{width: "30%"}}>{/*styling*/}
-                <button className="homeLatestInfoButtons" >More Info</button>
-            </div>
-    
-        </div>)
-}
-
-function latestTransactionEntries(transactionAddress, transactionFrom, transactionTo) {
-    return (
-        <div className="homeLatestInfoTemplate" style={{gap: "17%"}}>
-            <h3>{substring(transactionAddress, 0, 12)}...</h3>
-
-            <div className="homeLatestInfoCenter">
+            <div className="homeLatestInfoCenter" style={{width: "30%"}}>
 
                 <div className="homeLatestInfoCenterRow">
                     <h3>from  </h3>
-                    <h3>{substring(transactionFrom, 0, 12)}...</h3>
+                    <h3>{substring(centerTopData, 0, 12)}...</h3>
                 </div>
 
                 <div className="homeLatestInfoCenterRow">
                     <h3>to  </h3>
-                    <h3>{substring(transactionTo, 0, 12)}...</h3>
+                    <h3>{substring(centerBottomData, 0, 12)}...</h3>
                 </div>
             </div>
 
-            <button className="homeLatestInfoButtons">More Info</button>   
+            <div style={{width: "30%"}}>{/*styling*/}
+                <button className="homeLatestInfoButtons">More Info</button> 
+            </div>  
         </div>)
 }
 
@@ -107,7 +96,7 @@ export const Home = () => {
             
                 <div className="homeLatestInfo"> {/*styling*/} 
                     
-                    {latestBlockEntries(blockNumber, miner, numberOfTransactions)}
+                    {latestEntries(blockNumber, miner, numberOfTransactions)}
 
                 </div>
             </div>
@@ -118,7 +107,7 @@ export const Home = () => {
 
                 <div className="homeLatestInfo"> {/*styling*/} 
 
-                    {latestTransactionEntries(transactionAddress, transactionFrom, transactionTo)}
+                    {latestEntries(transactionAddress, transactionFrom, transactionTo)}
 
                 </div>
             </div>
