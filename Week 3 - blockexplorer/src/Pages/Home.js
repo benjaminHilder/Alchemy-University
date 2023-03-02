@@ -1,6 +1,7 @@
-import "../App.css"
+import "../css/home.css"
 import { Alchemy, Network } from 'alchemy-sdk';
 import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom"
 
 //alchemy
 const settings = {
@@ -48,10 +49,28 @@ function latestEntries (leftData, centerTopData, centerBottomData) {
         </div>)
 }
 
+const loadSearchResult = async(input) => {
+    const transaction = await alchemy.core.getTransaction(input)
+
+    localStorage.setItem("Transaction Hash", transaction.hash)
+    localStorage.setItem("Status", "loading...")
+    localStorage.setItem("Block", transaction.block)
+    localStorage.setItem("Timestamp", "loading...")
+    localStorage.setItem("From", transaction.from)
+    localStorage.setItem("To", transaction.to)
+    localStorage.setItem("Value", transaction.value)
+    localStorage.setItem("Fee", transaction.gas)
+    localStorage.setItem("GasPrice", transaction.gasPrice)
+
+    
+}
+
 export const Home = () => {
     const [blockNumbers, setBlockNumbers] = useState([]);
     const [blocks, setBlocks] = useState([]);
     const [transactions, setTransactions] = useState([]);
+
+    const [searchInput, setSearchInput] = useState();
     
     useEffect(() => {
         async function fetchData() {
@@ -73,18 +92,27 @@ export const Home = () => {
         }
 
         fetchData();
+        
     }, []);
 
     return (
-    <div class="main">
+    <div className="main">  
+
+        <div className="homeSearchArea">
+            <input style={{ height: "2.5vh"}} onChange={(e) => setSearchInput(e.target.value)}></input>
+            
+            <Link to="/search" onClick={() => loadSearchResult(searchInput)}>search</Link>
+        </div>
+
+
         <div className="homeLatestInfoAll">
             
             <div className="homeLatestArea">
                 <h2 className="homeLatestInfoTitle">Latest Blocks</h2>
-            
+
                 <div className="homeLatestInfo"> {/*styling*/} 
-                {/*if blocks is true loop of the blocks array and apply latestEntries function to the blocks array and then display */}
-                {blocks && blocks.map((block, index) => (latestEntries(blockNumbers[index], block.miner, block.transactions.length)))}
+                    {/*if blocks is true loop of the blocks array and apply latestEntries function to the blocks array and then display */}
+                    {blocks && blocks.map((block, index) => (latestEntries(blockNumbers[index], block.miner, block.transactions.length)))}
                 </div>
             </div>
 
@@ -93,8 +121,7 @@ export const Home = () => {
                 <h2 className="homeLatestInfoTitle">Latest Transactions</h2>
 
                 <div className="homeLatestInfo"> {/*styling*/} 
-
-                {transactions && transactions.map(transaction => latestEntries(transaction.hash, transaction.from, transaction.to))}
+                    {transactions && transactions.map(transaction => latestEntries(transaction.hash, transaction.from, transaction.to))}
                 </div>
             </div>
         </div>

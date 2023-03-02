@@ -2,13 +2,10 @@ import { Alchemy, Network } from 'alchemy-sdk';
 import { BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
 import { Home } from "./Pages/Home"
 import { Navbar } from "./Pages/Navbar"
-import { Block } from "./Pages/Block"
-import { Transactions } from "./Pages/Transactions"
-import { LatestTransactions } from './Pages/LatestTransactions';
 import { TokenHoldings } from './Pages/TokenHoldings';
 import { NFTHoldings } from './Pages/NFTHoldings';
+import { Search } from './Pages/Search'
 
-import './App.css';
 
 // Refer to the README doc for more information about using API
 // keys in client-side code. You should never do this in production
@@ -34,11 +31,9 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Block" element={<Block />} />
-          <Route path="/Transactions" element={<Transactions />} />
-          <Route path="/LatestTransactions" element={<LatestTransactions />} />
           <Route path="/TokenHoldings" element={<TokenHoldings /> } />
           <Route path="/NFTHoldings" element={<NFTHoldings />} />
+          <Route path="/Search" element={<Search/>} />
         </Routes>
       </Router>
     </div>
