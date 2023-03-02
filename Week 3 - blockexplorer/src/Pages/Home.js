@@ -49,39 +49,31 @@ function latestEntries (leftData, centerTopData, centerBottomData) {
 }
 
 export const Home = () => {
-    const [blockNumbers, setBlockNumbers] = useState();
-    const [blocks, setBlocks] = useState();
-
-    const [transactions, setTransactions] = useState()
-
-    useEffect(async function() {
+    const [blockNumbers, setBlockNumbers] = useState([]);
+    const [blocks, setBlocks] = useState([]);
+    const [transactions, setTransactions] = useState([]);
     
-        if (blockNumbers === undefined) {
-            const blockNumber = await alchemy.core.getBlockNumber()
-
-            const newBlockNumbers = []
-            const newBlocks = []
-     
-            for (let i = 0; i < maxEntries; i++) {
-                newBlockNumbers.push(blockNumber - i);
-                newBlocks.push(await alchemy.core.getBlock(blockNumber - i))
-            }
-            
-            await setBlockNumbers(newBlockNumbers)
-            await setBlocks(newBlocks)
-        }
-
-        if (transactions === undefined) {
-            const newTransactions = []
+    useEffect(() => {
+        async function fetchData() {
+            const blockNumber = await alchemy.core.getBlockNumber();
 
             for (let i = 0; i < maxEntries; i++) {
-                newTransactions.push(await alchemy.core.getTransaction(blocks[0].transactions[i]))
+                const newBlockNumber = blockNumber - i;
+                setBlockNumbers(prevBlockNumbers => [...prevBlockNumbers, newBlockNumber]);
+    
+                const block = await alchemy.core.getBlock(newBlockNumber);
+                setBlocks(prevBlocks => [...prevBlocks, block]);
+    
+                const transaction = await alchemy.core.getTransaction(
+                    block.transactions[i]
+                );
+
+                setTransactions(prevTransactions => [...prevTransactions, transaction]);
             }
-
-            setTransactions(newTransactions)
-
         }
-    })
+
+        fetchData();
+    }, []);
 
     return (
     <div class="main">
