@@ -11,6 +11,8 @@ const settings = {
 const alchemy = new Alchemy(settings);
 //alchemy
 
+const maxEntries = 10;
+
 function substring(text, start, end) {
     if (text == "undefined" ||text == undefined) return
     
@@ -47,44 +49,77 @@ function latestEntries (leftData, centerTopData, centerBottomData) {
 }
 
 export const Home = () => {
-    const [blockNumber, setBlockNumber] = useState();
-    const [block, setBlock] = useState();
+    //const [blockNumber, setBlockNumber] = useState();
+    const [blockNumbers, setBlockNumbers] = useState();
+    const [blocks, setBlocks] = useState();
+
+    const [transactions, setTransactions] = useState()
     
     //latest blocks
-    const [blockHash, setBlockHash] = useState()
-    const [miner, setMiner] = useState() //make array of latest
-    const [numberOfTransactions, setNumberOfTransactions] = useState(); // make array of latest
-
-    //latest transactions
-    const [transactionAddress, setTransactionAddress] = useState()
-    const [latestTransaction, setLatestTransaction] = useState()
-
-    const [transactionFrom, setTransactionFrom] = useState()
-    const [transactionTo, setTransactionTo] = useState()
+    //const [blockHash, setBlockHash] = useState()
+    //const [miner, setMiner] = useState() //make array of latest
+    //const [numberOfTransactions, setNumberOfTransactions] = useState(); // make array of latest
+//
+    ////latest transactions
+    //const [transactionAddress, setTransactionAddress] = useState()
+    //const [latestTransaction, setLatestTransaction] = useState()
+//
+    //const [transactionFrom, setTransactionFrom] = useState()
+    //const [transactionTo, setTransactionTo] = useState()
 
     useEffect(async function() {
-        if (blockNumber === undefined && await alchemy.core.getBlockNumber() != undefined) {
+    
+        if (blockNumbers === undefined) {
+            const blockNumber = await alchemy.core.getBlockNumber()
+
+            const newBlockNumbers = []
+            const newBlocks = []
+     
+            for (let i = 0; i < maxEntries; i++) {
+                newBlockNumbers.push(blockNumber - i);
+                newBlocks.push(await alchemy.core.getBlock(blockNumber - i))
+            }
             
-            setBlockNumber(await alchemy.core.getBlockNumber())
-            
-            await setBlock(await alchemy.core.getBlock(blockNumber))
+            await setBlockNumbers(newBlockNumbers)
+            await setBlocks(newBlocks)
         }
 
-        if (block != undefined) {
-            await setBlockHash(await block.hash)
-            await setMiner(await block.miner)
-            await setNumberOfTransactions(await block.transactions.length)
+        if (transactions === undefined) {
+            const newTransactions = []
 
-            //console.log(block)
-            await setTransactionAddress(await block.transactions[0])
-            await setLatestTransaction(await alchemy.core.getTransaction(transactionAddress))
+            for (let i = 0; i < maxEntries; i++) {
+                newTransactions.push(await alchemy.core.getTransaction(blocks[0].transactions[i]))
+            }
+
+            setTransactions(newTransactions)
 
         }
 
-        if (latestTransaction != undefined) {
-            await setTransactionFrom(await latestTransaction.from)
-            await setTransactionTo(await latestTransaction.to)
-        }
+        //if (blockNumbers != undefined) {
+        //    
+        //    let newBlockNumbers = await []
+        //    for (let i = 0; i < maxEntries; i++) {
+        //        await newBlockNumbers.push(
+        //    }
+//
+        //    await setBlockNumbers(newBlockNumbers)
+        //}
+//
+//if (block != undefined) {
+//    await setBlockHash(await block.hash)
+//    await setMiner(await block.miner)
+//    await setNumberOfTransactions(await block.transactions.length)
+//
+//    //console.log(block)
+//    await setTransactionAddress(await block.transactions[0])
+//    await setLatestTransaction(await alchemy.core.getTransaction(transactionAddress))
+//
+//}
+//
+//if (latestTransaction != undefined) {
+//    await setTransactionFrom(await latestTransaction.from)
+//    await setTransactionTo(await latestTransaction.to)
+//}
     })
 
     return (
@@ -95,9 +130,16 @@ export const Home = () => {
                 <h2 className="homeLatestInfoTitle">Latest Blocks</h2>
             
                 <div className="homeLatestInfo"> {/*styling*/} 
-                    
-                    {latestEntries(blockNumber, miner, numberOfTransactions)}
-
+                    {blocks && latestEntries(blockNumbers[0], blocks[0].miner, blocks[0].transactions.length)}
+                    {blocks && latestEntries(blockNumbers[1], blocks[1].miner, blocks[1].transactions.length)}
+                    {blocks && latestEntries(blockNumbers[2], blocks[2].miner, blocks[2].transactions.length)}
+                    {blocks && latestEntries(blockNumbers[3], blocks[3].miner, blocks[3].transactions.length)}
+                    {blocks && latestEntries(blockNumbers[4], blocks[4].miner, blocks[4].transactions.length)}
+                    {blocks && latestEntries(blockNumbers[5], blocks[5].miner, blocks[5].transactions.length)}
+                    {blocks && latestEntries(blockNumbers[6], blocks[6].miner, blocks[6].transactions.length)}
+                    {blocks && latestEntries(blockNumbers[7], blocks[7].miner, blocks[7].transactions.length)}
+                    {blocks && latestEntries(blockNumbers[8], blocks[8].miner, blocks[8].transactions.length)}
+                    {blocks && latestEntries(blockNumbers[9], blocks[9].miner, blocks[9].transactions.length)}
                 </div>
             </div>
 
@@ -107,8 +149,16 @@ export const Home = () => {
 
                 <div className="homeLatestInfo"> {/*styling*/} 
 
-                    {latestEntries(transactionAddress, transactionFrom, transactionTo)}
-
+                    {transactions && latestEntries(transactions[0].hash, transactions[0].from, transactions[0].to)}
+                    {transactions && latestEntries(transactions[1].hash, transactions[1].from, transactions[1].to)}
+                    {transactions && latestEntries(transactions[2].hash, transactions[2].from, transactions[2].to)}
+                    {transactions && latestEntries(transactions[3].hash, transactions[3].from, transactions[3].to)}
+                    {transactions && latestEntries(transactions[4].hash, transactions[4].from, transactions[4].to)}
+                    {transactions && latestEntries(transactions[5].hash, transactions[5].from, transactions[5].to)}
+                    {transactions && latestEntries(transactions[6].hash, transactions[6].from, transactions[6].to)}
+                    {transactions && latestEntries(transactions[7].hash, transactions[7].from, transactions[7].to)}
+                    {transactions && latestEntries(transactions[8].hash, transactions[8].from, transactions[8].to)}
+                    {transactions && latestEntries(transactions[9].hash, transactions[9].from, transactions[9].to)}
                 </div>
             </div>
         </div>
