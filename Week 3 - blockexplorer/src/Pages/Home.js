@@ -49,23 +49,10 @@ function latestEntries (leftData, centerTopData, centerBottomData) {
 }
 
 export const Home = () => {
-    //const [blockNumber, setBlockNumber] = useState();
     const [blockNumbers, setBlockNumbers] = useState();
     const [blocks, setBlocks] = useState();
 
     const [transactions, setTransactions] = useState()
-    
-    //latest blocks
-    //const [blockHash, setBlockHash] = useState()
-    //const [miner, setMiner] = useState() //make array of latest
-    //const [numberOfTransactions, setNumberOfTransactions] = useState(); // make array of latest
-//
-    ////latest transactions
-    //const [transactionAddress, setTransactionAddress] = useState()
-    //const [latestTransaction, setLatestTransaction] = useState()
-//
-    //const [transactionFrom, setTransactionFrom] = useState()
-    //const [transactionTo, setTransactionTo] = useState()
 
     useEffect(async function() {
     
@@ -94,32 +81,6 @@ export const Home = () => {
             setTransactions(newTransactions)
 
         }
-
-        //if (blockNumbers != undefined) {
-        //    
-        //    let newBlockNumbers = await []
-        //    for (let i = 0; i < maxEntries; i++) {
-        //        await newBlockNumbers.push(
-        //    }
-//
-        //    await setBlockNumbers(newBlockNumbers)
-        //}
-//
-//if (block != undefined) {
-//    await setBlockHash(await block.hash)
-//    await setMiner(await block.miner)
-//    await setNumberOfTransactions(await block.transactions.length)
-//
-//    //console.log(block)
-//    await setTransactionAddress(await block.transactions[0])
-//    await setLatestTransaction(await alchemy.core.getTransaction(transactionAddress))
-//
-//}
-//
-//if (latestTransaction != undefined) {
-//    await setTransactionFrom(await latestTransaction.from)
-//    await setTransactionTo(await latestTransaction.to)
-//}
     })
 
     return (
