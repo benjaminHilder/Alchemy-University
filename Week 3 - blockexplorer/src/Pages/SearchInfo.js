@@ -63,25 +63,22 @@ function displayTransaction(hash, status, block, timestamp, from, to, value, fee
     )
 }
 
-function displayBlock(blockHeight, status, timestamp, proposedOn, transactions, feeRecipient, blockReward, totalDifficulty, size, gasUsed, gasLimit, baseFeePerGas, burntFees, extraData) {
+function displayBlock(blockHeight, status, timestamp, transactions, feeRecipient, totalDifficulty, gasUsed, gasLimit, baseFeePerGas, extraData) {
     return (
         <div className="block">
             <div className="titles">
                 <h3>Block Height:</h3>
                 <h3>Status:</h3>
                 <h3>Timestamp</h3>
-                <h3>Proposed On:</h3>
                 <h3>Transactions:</h3>
 
                 <h3>Fee Recipient:</h3>
-                <h3>Block Reward:</h3>
                 <h3>Total Difficulty:</h3>
-                <h3>Size:</h3>
+
 
                 <h3>Gas Used:</h3>
                 <h3>Gas Limit:</h3>
                 <h3>Base Fee Per Gas:</h3>
-                <h3>Burnt Fees:</h3>
                 <h3>Extra Data:</h3>
             </div>
 
@@ -89,18 +86,14 @@ function displayBlock(blockHeight, status, timestamp, proposedOn, transactions, 
                 <h3>{blockHeight}</h3>
                 <h3>{status}</h3>
                 <h3>{timestamp}</h3>
-                <h3>{proposedOn}</h3>
                 <h3>{transactions}</h3>
     
                 <h3>{feeRecipient}</h3>
-                <h3>{blockReward}</h3>
                 <h3>{totalDifficulty}</h3>
-                <h3>{size}</h3>
 
                 <h3>{gasUsed}</h3>
                 <h3>{gasLimit}</h3>
                 <h3>{baseFeePerGas}</h3>
-                <h3>{burntFees}</h3>
                 <h3>{extraData}</h3>
             </div>
         </div>
@@ -286,8 +279,9 @@ export const SearchInfo = () => {
 
             setBlockBaseFeePerGas(String(block.baseFeePerGas))
             setBlockExtraData(block.extraData)
-            //const transactionReceipt = alchemy.core.getTransactionReceipt(block.transactions[0].hash)
-            //setBlockStatus(transactionReceipt.status)
+
+            const transactionReceipt = await alchemy.core.getTransactionReceipt(block.transactions[0])
+            setBlockStatus(transactionReceipt.status)
         }
 
         determinePage()
@@ -318,16 +312,12 @@ export const SearchInfo = () => {
             {pageToDisplay == PageType.Block && displayBlock(block,
                                                              blockStatus,
                                                              blockTimestamp,
-                                                             blockProposedOn,
                                                              blockTransactionLength,
                                                              blockFeeRecipient,
-                                                             blockReward,
                                                              blockTotalDifficulty,
-                                                             blockSize,
                                                              blockGasUsed,
                                                              blockGasLimit,
                                                              blockBaseFeePerGas,
-                                                             blockBurntFees,
                                                              blockExtraData
                                                              )}
 
