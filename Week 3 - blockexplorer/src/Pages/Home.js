@@ -1,7 +1,7 @@
 import "../css/home.css"
 import { Alchemy, Network } from 'alchemy-sdk';
 import { useEffect, useState} from 'react';
-import { Link    } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 //alchemy
 const settings = {
@@ -51,16 +51,6 @@ function latestEntries (leftData, centerTopData, centerBottomData) {
             </div>  
         </div>)
 }
-
-//const searchUserInput = async(input) => {
-//    if (input === "" || input === undefined) return;
-//
-//    if (input.length == 42) {
-//
-//    }
-//
-//    localStorage.setItem("searchInput", input)
-//}
 
 export const Home = () => {
     const [blockNumbers, setBlockNumbers] = useState([]);

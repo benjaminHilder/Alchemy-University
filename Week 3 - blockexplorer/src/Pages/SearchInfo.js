@@ -1,6 +1,7 @@
 import "../css/searchInfo.css"
 import { Alchemy, Network } from 'alchemy-sdk';
 import { useEffect, useState } from 'react';
+import { formatEther } from 'ethers'
 
 //alchemy
 const settings = {
@@ -117,7 +118,7 @@ function displayAccount(accountAddress, accountEthBalance, accountFirstTx, accou
 
             <div className="data">
                 <h3>{accountAddress}</h3>
-                <h3>{accountEthBalance}</h3>
+                <h3>{accountEthBalance} ETH</h3>
                 <h3>{accountFirstTx}</h3>
                 <h3>{accountLastTx}</h3>
             </div>
@@ -195,7 +196,8 @@ export const SearchInfo = () => {
 
                 if (transaction) {
                     setPageToDisplay(PageType.Transaction)
-                    //set data
+                    
+                    getDataForTransaction()
                     return
                 }
 
@@ -207,10 +209,11 @@ export const SearchInfo = () => {
                 //confirm if address, if so set data
                 if (addressTransactionCount > 0) {
                     setPageToDisplay(PageType.Account)
-                    //set data
+
+                    getDataForAccount()
                     return
                 }
-                
+
             //block
             } else if (searchInput.length == 8) {
                 const block = await alchemy.core.getBlock(parseInt(searchInput))
@@ -218,7 +221,8 @@ export const SearchInfo = () => {
 
                 if (blockMiner !== undefined || blockMiner !== '') {
                     setPageToDisplay(PageType.Block)
-                    //set data
+                    
+                    getDataForBlock()
                     return
                 }
             }
@@ -245,6 +249,22 @@ export const SearchInfo = () => {
             //setFee(transaction.gas)
             //setGasPrice(transaction.gasPrice)
             
+        }
+
+        async function getDataForAccount() {
+            const amount = await (String(await alchemy.core.getBalance(searchInput)))
+            setAccountEthBalance(await formatEther(amount))
+            
+            const accountTransfers = await alchemy.core.getAssetTransfers({
+                fromBlock: "0x0",
+                fromAddress: searchInput,
+                excludeZeroValue: true,
+                category: ["external", "erc20"]
+            })
+            console.log(accountTransfers.transfers[0].hash)
+            setAccountFirstTx(accountTransfers.transfers[0].hash)
+            setAccountLastTx(accountTransfers.transfers[accountTransfers.transfers.length - 1].hash)
+
         }
 
         async function getDataForBlock() {
