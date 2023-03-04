@@ -69,6 +69,7 @@ function displayBlock(blockHeight, status, timestamp, proposedOn, transactions, 
             <div className="titles">
                 <h3>Block Height:</h3>
                 <h3>Status:</h3>
+                <h3>Timestamp</h3>
                 <h3>Proposed On:</h3>
                 <h3>Transactions:</h3>
 
@@ -235,25 +236,18 @@ export const SearchInfo = () => {
 
         async function getDataForTransaction() {    
             const transactionReceipt = await alchemy.core.getTransactionReceipt(searchInput)
-            //const block = await alchemy.core.getBlock(transaction.hash)
         
             setTransactionHash(transactionReceipt.transactionHash)
             setTransactionStatus(transactionReceipt.status)
             setBlock(transactionReceipt.blockNumber)
 
-            
-            //setTransactionTimestamp(block.timestamp)
-
             setTransactionFrom(transactionReceipt.from)
             setTransactionTo(transactionReceipt.to)
-
             setTransactionFee(String(transactionReceipt.gasUsed))
 
             const transactionData = await alchemy.core.getTransaction(searchInput)
             
             setTransactionValue(await formatEther(String(transactionData.value)))
-            //setFee(transaction.gas)
-            
             setTransactionGasPrice(await formatUnits(String(transactionData.gasPrice)), "gwei")
             
             const block = await alchemy.core.getBlock(transactionReceipt.blockNumber)
@@ -278,12 +272,25 @@ export const SearchInfo = () => {
         }
 
         async function getDataForBlock() {
-            const block = await alchemy.core.getBlock(searchInput)
+            const block = await alchemy.core.getBlock(parseInt(searchInput))
+
+            setBlock(searchInput)
+            setBlockTimestamp(block.timestamp)
+            setBlockTransactionLength(block.transactions.length)
+            
+            setBlockFeeRecipient(block.miner)
+
+            setBlockTotalDifficulty(block.difficulty)
+            setBlockGasUsed(String(block.gasUsed))
+            setBlockGasLimit(String(block.gasLimit))
+
+            setBlockBaseFeePerGas(String(block.baseFeePerGas))
+            setBlockExtraData(block.extraData)
+            //const transactionReceipt = alchemy.core.getTransactionReceipt(block.transactions[0].hash)
+            //setBlockStatus(transactionReceipt.status)
         }
 
         determinePage()
-        //setPageToDisplay(PageType.Account)
-        //getDataForTransaction()
     }, [])
 
     return (
@@ -308,7 +315,8 @@ export const SearchInfo = () => {
                                                                  accountLastTx
                                                                  )}
                                                                   
-            {pageToDisplay == PageType.Block && displayBlock(blockStatus,
+            {pageToDisplay == PageType.Block && displayBlock(block,
+                                                             blockStatus,
                                                              blockTimestamp,
                                                              blockProposedOn,
                                                              blockTransactionLength,
