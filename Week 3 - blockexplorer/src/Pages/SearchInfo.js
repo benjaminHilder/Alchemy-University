@@ -19,7 +19,7 @@ const PageType = {
     Error : 3
 }
 
-function displayTransaction(hash, status, block, timestamp, from, to, value, fee, gasPrice, gasLimit, gasUsageByTxn, burntFees, txnSavingFees) {
+function displayTransaction(hash, status, block, timestamp, from, to, value, fee, gasPrice) {
     return (
         <div className="transaction">
             <div className="titles">
@@ -34,11 +34,6 @@ function displayTransaction(hash, status, block, timestamp, from, to, value, fee
                 <h3>Value:</h3>
                 <h3>Transaction Fee:</h3>
                 <h3>Gas Price:</h3>
-
-                <h3>Transaction Gas Limit:</h3>
-                <h3>Transaction Gas Usage By Txn:</h3>
-                <h3>Transaction Burnt Fees:</h3>
-                <h3>Transaction Txn Saving Fees:</h3>
             </div>
 
             <div className="data">
@@ -53,11 +48,6 @@ function displayTransaction(hash, status, block, timestamp, from, to, value, fee
                 <h3>{value} ETH</h3>
                 <h3>{fee}</h3>
                 <h3>{gasPrice}</h3>
-
-                <h3>{gasLimit}</h3>
-                <h3>{gasUsageByTxn}</h3>
-                <h3>{burntFees}</h3>
-                <h3>{txnSavingFees}</h3>
             </div>
         </div>
     )
@@ -145,26 +135,17 @@ export const SearchInfo = () => {
     const [transactionFee, setTransactionFee] = useState(defaultText)
     const [transactionGasPrice, setTransactionGasPrice] = useState(defaultText)
 
-    const [transactionGasLimit, setTransactionGasLimit] = useState(defaultText)
-    const [transactionGasUsageByTxn, setTransactionGasUsageByTxn] = useState(defaultText)
-    const [transactionBurntFees, setTransactionBurntFees] = useState(defaultText)
-    const [transactionTxnSavingFees, setTransactionTxnSavingFees] = useState(defaultText)
-
     //block data only
     const [blockStatus, setBlockStatus] = useState(defaultText)
     const [blockTimestamp, setBlockTimestamp] = useState(defaultText)
-    const [blockProposedOn, setBlockProposedOn] = useState(defaultText)
     const [blockTransactionLength, setBlockTransactionLength] = useState(defaultText)
 
     const [blockFeeRecipient, setBlockFeeRecipient] = useState(defaultText)
-    const [blockReward, setBlockReward] = useState(defaultText)
     const [blockTotalDifficulty, setBlockTotalDifficulty] = useState(defaultText)
-    const [blockSize, setBlockSize] = useState(defaultText)
-
+   
     const [blockGasUsed, setBlockGasUsed] = useState(defaultText)
     const [blockGasLimit, setBlockGasLimit] = useState(defaultText)
     const [blockBaseFeePerGas, setBlockBaseFeePerGas] = useState(defaultText)
-    const [blockBurntFees, setBlockBurntFees] = useState(defaultText)
     const [blockExtraData, setBlockExtraData] = useState(defaultText)
 
     //transaction and block data
@@ -297,11 +278,7 @@ export const SearchInfo = () => {
                                                                          transactionTo, 
                                                                          transactionValue, 
                                                                          transactionFee, 
-                                                                         transactionGasPrice,
-                                                                         transactionGasLimit,
-                                                                         transactionGasUsageByTxn,
-                                                                         transactionBurntFees,
-                                                                         transactionTxnSavingFees
+                                                                         transactionGasPrice
                                                                          )}
             {pageToDisplay == PageType.Account && displayAccount(localStorage.getItem("searchInput"),
                                                                  accountEthBalance,
