@@ -1,7 +1,7 @@
 import "../css/searchInfo.css"
 import { Alchemy, Network } from 'alchemy-sdk';
 import { useEffect, useState } from 'react';
-import { formatEther } from 'ethers'
+import { formatEther, formatUnits } from 'ethers'
 
 //alchemy
 const settings = {
@@ -50,7 +50,7 @@ function displayTransaction(hash, status, block, timestamp, from, to, value, fee
                 <h3>{from}</h3>
                 <h3>{to}</h3>
         
-                <h3>{value}</h3>
+                <h3>{value} ETH</h3>
                 <h3>{fee}</h3>
                 <h3>{gasPrice}</h3>
 
@@ -206,7 +206,7 @@ export const SearchInfo = () => {
             } else if (searchInput.length == 42) {
                 const addressTransactionCount = await alchemy.core.getTransactionCount(searchInput)
 
-                //confirm if address, if so set data
+                //confirm if address, if so set dataf
                 if (addressTransactionCount > 0) {
                     setPageToDisplay(PageType.Account)
 
@@ -234,21 +234,31 @@ export const SearchInfo = () => {
         }
 
         async function getDataForTransaction() {    
-            const transaction = await alchemy.core.getTransaction(searchInput)
-            const block = await alchemy.core.getBlock(transaction.hash)
+            const transactionReceipt = await alchemy.core.getTransactionReceipt(searchInput)
+            //const block = await alchemy.core.getBlock(transaction.hash)
         
-            setTransactionHash(transaction.hash)
-            setTransactionStatus("Loading...")
-            setBlock(transaction.blockNumber)
-            setTransactionTimestamp(block.timestamp)
+            setTransactionHash(transactionReceipt.transactionHash)
+            setTransactionStatus(transactionReceipt.status)
+            setBlock(transactionReceipt.blockNumber)
 
-            setTransactionFrom(transaction.from)
-            setTransactionTo(transaction.to)
-
-            //setValue(transaction.value)
-            //setFee(transaction.gas)
-            //setGasPrice(transaction.gasPrice)
             
+            //setTransactionTimestamp(block.timestamp)
+
+            setTransactionFrom(transactionReceipt.from)
+            setTransactionTo(transactionReceipt.to)
+
+            setTransactionFee(String(transactionReceipt.gasUsed))
+
+            const transactionData = await alchemy.core.getTransaction(searchInput)
+            
+            setTransactionValue(await formatEther(String(transactionData.value)))
+            //setFee(transaction.gas)
+            
+            setTransactionGasPrice(await formatUnits(String(transactionData.gasPrice)), "gwei")
+            
+            const block = await alchemy.core.getBlock(transactionReceipt.blockNumber)
+            
+            setTransactionTimestamp(block.timestamp)
         }
 
         async function getDataForAccount() {
