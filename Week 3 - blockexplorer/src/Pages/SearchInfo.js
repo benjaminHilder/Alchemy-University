@@ -105,44 +105,30 @@ function displayBlock(blockHeight, status, timestamp, proposedOn, transactions, 
     )
 }
 
-function displayAccount() {
+function displayAccount(accountAddress, accountEthBalance, accountFirstTx, accountLastTx) {
     return (
         <div className="account">
             <div className="titles">
-                <h3>Transaction Hash</h3>
-                <h3>Status</h3>
-                <h3>Block</h3>
-                <h3>Timestamp</h3>
-
-                <h3>From</h3>
-                <h3>To</h3>
-
-                <h3>Value</h3>
-                <h3>Transaction Fee</h3>
-                <h3>Gas Price</h3>
+                <h3>Account Address:</h3>
+                <h3>Account Eth Balance:</h3>
+                <h3>Account First Tx:</h3>
+                <h3>Account Last Tx:</h3>
             </div>
 
             <div className="data">
-                <h3>transactionHash</h3>
-                <h3>status</h3>
-                <h3>block</h3>
-                <h3>timestamp</h3>
-    
-                <h3>from</h3>
-                <h3>to</h3>
-    
-                <h3>value</h3>
-                <h3>fee</h3>
-                <h3>gasPrice</h3>
+                <h3>{accountAddress}</h3>
+                <h3>{accountEthBalance}</h3>
+                <h3>{accountFirstTx}</h3>
+                <h3>{accountLastTx}</h3>
             </div>
         </div>
     )
 }
 
-function displayError() {
+function displayError(errorMessage) {
     return (
         <div className="error">
-            <h2>incorrect input</h2>
+            <h2>{errorMessage}</h2>
         </div>
     )
 }
@@ -191,8 +177,8 @@ export const SearchInfo = () => {
 
     //account data
     const [accountEthBalance, setAccountEthBalance] = useState(defaultText)
-    const [accountLastTx, setAccountLastTx] = useState(defaultText)
     const [accountFirstTx, setAccountFirstTx] = useState(defaultText)
+    const [accountLastTx, setAccountLastTx] = useState(defaultText)
     const [accountTxs, setAccountTxs] = useState(defaultText)
     const [accountTokenHoldings, setAccountTokenHoldings] = useState(defaultText)
 
@@ -200,37 +186,50 @@ export const SearchInfo = () => {
         const searchInput = localStorage.getItem("searchInput")
         
         async function determinePage() {
-            if (searchInput.length == 42) {
+
+            //transaction
+            if (searchInput.length == 66) {
+                
+                //confirm if transaction, if so set data
                 const transaction = await alchemy.core.getTransaction(searchInput)
 
                 if (transaction) {
                     setPageToDisplay(PageType.Transaction)
+                    //set data
                     return
-
-                } else {
-                    const transactionCount = await alchemy.core.getTransactionCount(searchInput)
-
-                    if (transactionCount > 0) {
-                        setPageToDisplay(PageType.Account)
-                        return
-                    } else {
-                        setPageToDisplay(PageType.Error)
-                        return
-                    }
                 }
-            } else {
-                const block = await alchemy.core.getBlock(searchInput);
-    
-                if (block.parentHash) {
+
+            //account
+            //will only work if account has made a transaction before
+            } else if (searchInput.length == 42) {
+                const addressTransactionCount = await alchemy.core.getTransactionCount(searchInput)
+
+                //confirm if address, if so set data
+                if (addressTransactionCount > 0) {
+                    setPageToDisplay(PageType.Account)
+                    //set data
+                    return
+                }
+                
+            //block
+            } else if (searchInput.length == 8) {
+                const block = await alchemy.core.getBlock(parseInt(searchInput))
+                const blockMiner = await block.miner;
+
+                if (blockMiner !== undefined || blockMiner !== '') {
                     setPageToDisplay(PageType.Block)
+                    //set data
                     return
                 }
+            }
+
+            if (pageToDisplay === undefined || pageToDisplay === '') {
                 setPageToDisplay(PageType.Error)
                 return
             }
         }
 
-        async function getDataForTransaction() {
+        async function getDataForTransaction() {    
             const transaction = await alchemy.core.getTransaction(searchInput)
             const block = await alchemy.core.getBlock(transaction.hash)
         
@@ -250,13 +249,10 @@ export const SearchInfo = () => {
 
         async function getDataForBlock() {
             const block = await alchemy.core.getBlock(searchInput)
-
-
-
         }
 
-        //determinePage()
-        setPageToDisplay(PageType.Block)
+        determinePage()
+        //setPageToDisplay(PageType.Account)
         //getDataForTransaction()
     }, [])
 
@@ -276,6 +272,12 @@ export const SearchInfo = () => {
                                                                          transactionBurntFees,
                                                                          transactionTxnSavingFees
                                                                          )}
+            {pageToDisplay == PageType.Account && displayAccount(localStorage.getItem("searchInput"),
+                                                                 accountEthBalance,
+                                                                 accountFirstTx,
+                                                                 accountLastTx
+                                                                 )}
+                                                                  
             {pageToDisplay == PageType.Block && displayBlock(blockStatus,
                                                              blockTimestamp,
                                                              blockProposedOn,
@@ -288,9 +290,10 @@ export const SearchInfo = () => {
                                                              blockGasLimit,
                                                              blockBaseFeePerGas,
                                                              blockBurntFees,
-                                                             blockExtraData)}
-            {pageToDisplay == PageType.Account && displayAccount()}
-            {pageToDisplay == PageType.Error && displayError()}
+                                                             blockExtraData
+                                                             )}
+
+            {pageToDisplay == PageType.Error && displayError("Invalid Input")}
         </div>
     )
 }
