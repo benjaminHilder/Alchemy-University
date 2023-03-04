@@ -1,0 +1,124 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+a {
+  color: inherit;
+  font-size: 2vh;
+  font-weight: bold;
+  padding:0.5vh;
+  margin:1vh;
+  text-decoration: none;
+  outline: auto;
+}
+
+a:hover {
+  background-color: black;
+  color: white;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.main {
+  position: relative;
+  top: 6vh;
+
+  display:flex;
+  justify-content: center;
+}
+/*******************************/
+.transaction {
+  display:flex;
+  align-content: flex-start;
+  border:solid;
+  border-radius: 0.6vh;
+  
+  width: 60%;
+  
+  position: relative;
+  transform: translateY(10%);
+  padding-left: 2vh;
+}
+.transaction > .titles {
+  text-align: left;
+  position:relative;
+  
+  width: 40vh;
+}
+
+.transaction > .data {
+  text-align: left;
+}
+/*******************************/
+.block {
+  display:flex;
+  align-content: flex-start;
+  border:solid;
+  border-radius: 0.6vh;
+  
+  width: 60%;
+  
+  position: relative;
+  transform: translateY(10%);
+  padding-left: 2vh;
+}
+
+.block > .titles {
+  text-align: left;
+  position:relative;
+  
+  width: 40vh;
+}
+
+.block > .data {
+  text-align: left;
+}
+/*******************************/
+.account {
+  display:flex;
+  align-content: flex-start;
+  border:solid;
+  border-radius: 0.6vh;
+  
+  width: 60%;
+  
+  position: relative;
+  transform: translateY(10%);
+  padding-left: 2vh;
+}
+
+.account > .titles {
+  text-align: left;
+  position:relative;
+  
+  width: 40vh;
+}
+
+.account > .data {
+  text-align: left;
+}
+/*******************************/

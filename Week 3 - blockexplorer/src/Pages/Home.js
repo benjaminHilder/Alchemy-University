@@ -1,7 +1,7 @@
 import "../css/home.css"
 import { Alchemy, Network } from 'alchemy-sdk';
-import { useEffect, useState } from 'react';
-import { Link } from "react-router-dom"
+import { useEffect, useState} from 'react';
+import { Link    } from "react-router-dom"
 
 //alchemy
 const settings = {
@@ -44,26 +44,23 @@ function latestEntries (leftData, centerTopData, centerBottomData) {
             </div>
 
             <div style={{width: "30%"}}>{/*styling*/}
-                <button className="homeLatestInfoButtons">More Info</button> 
+                <Link to="/SearchInfo" className="homeLatestInfoButtons" 
+                        onClick={() => localStorage.setItem("searchInput", leftData)}
+                        >More Info
+                </Link> 
             </div>  
         </div>)
 }
 
-const loadSearchResult = async(input) => {
-    const transaction = await alchemy.core.getTransaction(input)
-
-    localStorage.setItem("Transaction Hash", transaction.hash)
-    localStorage.setItem("Status", "loading...")
-    localStorage.setItem("Block", transaction.block)
-    localStorage.setItem("Timestamp", "loading...")
-    localStorage.setItem("From", transaction.from)
-    localStorage.setItem("To", transaction.to)
-    localStorage.setItem("Value", transaction.value)
-    localStorage.setItem("Fee", transaction.gas)
-    localStorage.setItem("GasPrice", transaction.gasPrice)
-
-    
-}
+//const searchUserInput = async(input) => {
+//    if (input === "" || input === undefined) return;
+//
+//    if (input.length == 42) {
+//
+//    }
+//
+//    localStorage.setItem("searchInput", input)
+//}
 
 export const Home = () => {
     const [blockNumbers, setBlockNumbers] = useState([]);
@@ -101,7 +98,7 @@ export const Home = () => {
         <div className="homeSearchArea">
             <input style={{ height: "2.5vh"}} onChange={(e) => setSearchInput(e.target.value)}></input>
             
-            <Link to="/search" onClick={() => loadSearchResult(searchInput)}>search</Link>
+            <Link to="/SearchInfo" onClick={() => localStorage.setItem("searchInput", searchInput)}>search</Link>
         </div>
 
 

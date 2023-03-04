@@ -4,7 +4,7 @@ import { Home } from "./Pages/Home"
 import { Navbar } from "./Pages/Navbar"
 import { TokenHoldings } from './Pages/TokenHoldings';
 import { NFTHoldings } from './Pages/NFTHoldings';
-import { Search } from './Pages/Search'
+import { SearchInfo } from './Pages/SearchInfo'
 
 
 // Refer to the README doc for more information about using API
@@ -33,7 +33,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/TokenHoldings" element={<TokenHoldings /> } />
           <Route path="/NFTHoldings" element={<NFTHoldings />} />
-          <Route path="/Search" element={<Search/>} />
+          <Route path="/SearchInfo" element={<SearchInfo/>} />
         </Routes>
       </Router>
     </div>
