@@ -160,28 +160,23 @@ a:hover {
 /*-----------TOP INFO----------*/
 .account > .bottomInfo {
   display: flex;
-  align-content: flex-start;
+  align-content: center;
   justify-content: center;
   flex-direction: column;
-}
-.account > .bottomInfo > .titles {
-  display: flex;
-  flex-direction: row;
-}
-
-.account > .bottomInfo > .titles > .eachTitle {
-  white-space: pre-wrap;
-}
+} 
 
 .account > .bottomInfo > .transactions {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  gap: 3%;
 }
 
 .account > .bottomInfo > .transactions > .transactionInfo > .transactionInfoItem {
   padding-right: 4vh;
+
   display: flex;
-  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 /*******************************/

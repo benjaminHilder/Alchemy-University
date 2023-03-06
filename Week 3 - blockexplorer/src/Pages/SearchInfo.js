@@ -162,19 +162,6 @@ function displayAccount(accountAddress, accountEthBalance, accountFirstTx, accou
                 <div className="info">
                     <p>Latest 25 from a total of ... transactions</p>
                 </div>
-
-                <div className="titles">
-                    <h3 className="eachTitle">Transaction </h3>
-                    <h3 className="eachTitle">Hash </h3>
-                    <h3 className="eachTitle">Method </h3>
-                    <h3 className="eachTitle">Block </h3>
-                    <h3 className="eachTitle">Age </h3>
-                    <h3 className="eachTitle">From </h3>
-                    <h3 className="eachTitle">To </h3>
-                    <h3 className="eachTitle">Value </h3>
-                    <h3 className="eachTitle">Txn </h3>
-                    <h3 className="eachTitle">Fee </h3>
-                </div>
                 
                 <div className="transactions"> 
                     {console.log(accountTxs.transfers)}
@@ -203,7 +190,15 @@ function displayTransactionInfo(title, transactionArray, elementName, displayAmo
 
 
     for(let i = 0; i < displayAmount; i++) {
-        transactionsData.push(transactionArray[transactionArray.length - 1 - i][elementName])
+        let result = String(transactionArray[transactionArray.length - 1 - i][elementName])
+
+        if (result.length == 66) {
+            result = `${result.substring(0, 19)}...`
+
+        } else if (result.length == 42) (
+            result = `${result.substring(0, 8)}...${result.substring(result.length - 9, result.length - 1)}`
+        )
+        transactionsData.push(result)
     }
 
     const data = transactionsData.map((info) =>
