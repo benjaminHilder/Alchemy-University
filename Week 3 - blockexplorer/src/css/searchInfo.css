@@ -101,24 +101,87 @@ a:hover {
 .account {
   display:flex;
   align-content: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  
+  width: 90%;
+}
+/*-----------TOP INFO----------*/
+.account > .topInfo {
+  display: flex;
+  align-content: flex-start;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.account > .topInfo > .topInfoBox {
+  
+  width: 35%;
+  height: 20vh;
+
   border:solid;
-  border-radius: 0.6vh;
-  
-  width: 60%;
-  
+  border-radius: 1vh;
+
+  margin: 1vh;
+  padding-right: 1.4vh;
+}
+
+.account > .topInfo > .topInfoBox > .title {
+  display: flex;
+  justify-content: flex-start;
+
+  padding-left: 5%;
+}
+
+.account > .topInfo > .topInfoBox > .topInfoBoxInner {
+  display: flex;
+  align-content: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+
+}
+
+.account > .topInfo > .topInfoBox > .topInfoBoxInner > .titles {
+  text-align: left;
   position: relative;
-  transform: translateY(10%);
-  padding-left: 2vh;
-}
-
-.account > .titles {
-  text-align: left;
-  position:relative;
   
-  width: 40vh;
+  width: 45%;
+
+  padding-left: 5%;
 }
 
-.account > .data {
+.account > .topInfo > .topInfoBox > .topInfoBoxInner > .data {
   text-align: left;
+
+  width: 45%;
+
+  padding-right: 5%;
 }
+/*-----------TOP INFO----------*/
+.account > .bottomInfo {
+  display: flex;
+  align-content: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+.account > .bottomInfo > .titles {
+  display: flex;
+  flex-direction: row;
+}
+
+.account > .bottomInfo > .titles > .eachTitle {
+  white-space: pre-wrap;
+}
+
+.account > .bottomInfo > .transactions {
+  display: flex;
+  flex-direction: row;
+}
+
+.account > .bottomInfo > .transactions > .transactionInfo > .transactionInfoItem {
+  padding-right: 4vh;
+  display: flex;
+  align-items: flex-start;
+}
+
 /*******************************/

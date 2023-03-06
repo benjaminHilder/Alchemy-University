@@ -14,13 +14,18 @@ const alchemy = new Alchemy(settings);
 
 const maxEntries = 10;
 
+const latestEntriesType = {
+    blocks: 0,
+    transactions: 1
+}
+
 function substring(text, start, end) {
     if (text == "undefined" ||text == undefined) return
     
     return text.substring(start, end)
 }
 
-function latestEntries (leftData, centerTopData, centerBottomData) {
+function latestEntries (leftData, centerTopData, centerBottomData, type) {
     //easier to read
     leftData = String(leftData);
     centerTopData = String(centerTopData);
@@ -28,18 +33,20 @@ function latestEntries (leftData, centerTopData, centerBottomData) {
 
     return (
         <div className="homeLatestInfoTemplate">
-            <h3 style={{width: "30%"}}>{substring(leftData, 0, 12)}...</h3>
-
+            {type == latestEntriesType.blocks && <h3 style={{width: "30%"}}>{leftData}</h3>}
+            {type == latestEntriesType.transactions && <h3 style={{width: "30%"}}>{substring(leftData, 0, 12)}...</h3>}
+        
             <div className="homeLatestInfoCenter" style={{width: "30%"}}>
 
                 <div className="homeLatestInfoCenterRow">
-                    <h3>from  </h3>
-                    <h3>{substring(centerTopData, 0, 12)}...</h3>
+                    {type == latestEntriesType.blocks && <h3>miner: {substring(centerTopData, 0, 6)}...{substring(centerTopData, centerTopData.length - 6, centerTopData.length)}</h3>}
+                    {type == latestEntriesType.transactions && <h3>from: {substring(centerTopData, 0, 6)}...{substring(centerTopData, centerTopData.length - 6, centerTopData.length)}</h3>}
                 </div>
 
                 <div className="homeLatestInfoCenterRow">
-                    <h3>to  </h3>
-                    <h3>{substring(centerBottomData, 0, 12)}...</h3>
+                    {type == latestEntriesType.blocks && <h3>txs:      {centerBottomData}</h3>}
+                    {type == latestEntriesType.transactions && <h3>to:      {substring(centerBottomData, 0, 6)}...{substring(centerBottomData, centerBottomData.length - 6, centerBottomData.length)}</h3>}
+
                 </div>
             </div>
 
@@ -99,7 +106,7 @@ export const Home = () => {
 
                 <div className="homeLatestInfo"> {/*styling*/} 
                     {/*if blocks is true loop of the blocks array and apply latestEntries function to the blocks array and then display */}
-                    {blocks && blocks.map((block, index) => (latestEntries(blockNumbers[index], block.miner, block.transactions.length)))}
+                    {blocks && blocks.map((block, index) => (latestEntries(blockNumbers[index], block.miner, block.transactions.length, latestEntriesType.blocks)))}
                 </div>
             </div>
 
@@ -108,7 +115,7 @@ export const Home = () => {
                 <h2 className="homeLatestInfoTitle">Latest Transactions</h2>
 
                 <div className="homeLatestInfo"> {/*styling*/} 
-                    {transactions && transactions.map(transaction => latestEntries(transaction.hash, transaction.from, transaction.to))}
+                    {transactions && transactions.map(transaction => latestEntries(transaction.hash, transaction.from, transaction.to, latestEntriesType.transactions))}
                 </div>
             </div>
         </div>

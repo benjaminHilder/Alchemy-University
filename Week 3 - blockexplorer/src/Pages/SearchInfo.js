@@ -90,24 +90,127 @@ function displayBlock(blockHeight, status, timestamp, transactions, feeRecipient
     )
 }
 
-function displayAccount(accountAddress, accountEthBalance, accountFirstTx, accountLastTx) {
+function displayAccount(accountAddress, accountEthBalance, accountFirstTx, accountLastTx, accountTxs) {
     return (
         <div className="account">
-            <div className="titles">
-                <h3>Account Address:</h3>
-                <h3>Account Eth Balance:</h3>
-                <h3>Account First Tx:</h3>
-                <h3>Account Last Tx:</h3>
-            </div>
+            <h3>Account Address: {accountAddress}</h3>
 
-            <div className="data">
-                <h3>{accountAddress}</h3>
-                <h3>{accountEthBalance} ETH</h3>
-                <h3>{accountFirstTx}</h3>
-                <h3>{accountLastTx}</h3>
+            {/*************************************/}
+            <div className="topInfo">
+
+                <div className="topInfoBox">
+
+                    <h3 className="title">Overview</h3>
+                    <div className="topInfoBoxInner">
+
+                        <div className="titles"> 
+                            <p>Account Eth Balance:</p>
+                            <p>val</p>
+                            <p>val</p>
+                        </div>
+
+                        <div className="data">
+                            <p>{accountEthBalance} ETH</p>
+                            <p>val</p>
+                            <p>val</p>
+                        </div>
+
+                    </div>
+                    
+                </div>
+
+                <div className="topInfoBox">
+
+                    <h3 className="title">More Info</h3>
+                    <div className="topInfoBoxInner">
+
+                        <div className="titles"> 
+                            <p>Account First Tx:</p>
+                            <p>Account Last Tx:</p>
+                        </div>
+
+                        <div className="data">
+                            <p>{accountFirstTx.substring(0, 8)}...{accountFirstTx.substring(accountFirstTx.length - 8, accountFirstTx.length)}</p>
+                            <p>{accountLastTx.substring(0, 8)}...{accountLastTx.substring(accountLastTx.length - 8, accountLastTx.length)}</p>
+                        </div>
+
+                    </div>
+                    
+                </div>
+
+                <div className="topInfoBox">
+
+                    <h3 className="title">Multichain</h3>
+                    <div className="topInfoBoxInner">
+
+                        <div className="titles"> 
+                            <p>Account First Tx:</p>
+                            <p>Account Last Tx:</p>
+                        </div>
+
+                        <div className="data">
+                            <p>{accountFirstTx.substring(0, 8)}...{accountFirstTx.substring(accountFirstTx.length - 8, accountFirstTx.length)}</p>
+                            <p>{accountLastTx.substring(0, 8)}...{accountLastTx.substring(accountLastTx.length - 8, accountLastTx.length)}</p>
+                        </div>
+
+                    </div>
+                    
+                </div>
             </div>
+            {/*************************************/}
+            <div className="bottomInfo">
+                <div className="info">
+                    <p>Latest 25 from a total of ... transactions</p>
+                </div>
+
+                <div className="titles">
+                    <h3 className="eachTitle">Transaction </h3>
+                    <h3 className="eachTitle">Hash </h3>
+                    <h3 className="eachTitle">Method </h3>
+                    <h3 className="eachTitle">Block </h3>
+                    <h3 className="eachTitle">Age </h3>
+                    <h3 className="eachTitle">From </h3>
+                    <h3 className="eachTitle">To </h3>
+                    <h3 className="eachTitle">Value </h3>
+                    <h3 className="eachTitle">Txn </h3>
+                    <h3 className="eachTitle">Fee </h3>
+                </div>
+                
+                <div className="transactions"> 
+                    {console.log(accountTxs.transfers)}
+    
+                        <div className="transactionInfo">{displayTransactionInfo("Transaction Hash", accountTxs.transfers, 'hash', 10)}</div>
+                        <div className="transactionInfo">{displayTransactionInfo("Method", accountTxs.transfers, 'blockNum', 10)}</div>
+                        <div className="transactionInfo">{displayTransactionInfo("Block", accountTxs.transfers, 'blockNum', 10)}</div>
+                        <div className="transactionInfo">{displayTransactionInfo("Age", accountTxs.transfers, 'blockNum', 10)}</div>
+                        <div className="transactionInfo">{displayTransactionInfo("From", accountTxs.transfers, 'from', 10)}</div>
+                        <div className="transactionInfo">{displayTransactionInfo("To", accountTxs.transfers, 'to', 10)}</div>
+                        <div className="transactionInfo">{displayTransactionInfo("Value", accountTxs.transfers, 'value', 10)}</div>
+                        <div className="transactionInfo">{displayTransactionInfo("Txn Fee", accountTxs.transfers, 'blockNum', 10)}</div>
+
+                   
+                </div>
+            </div>
+            {/*************************************/}
         </div>
     )
+}
+
+function displayTransactionInfo(title, transactionArray, elementName, displayAmount) {
+    if (transactionArray === undefined) return;
+
+    const transactionsData = [title]
+
+
+    for(let i = 0; i < displayAmount; i++) {
+        transactionsData.push(transactionArray[transactionArray.length - 1 - i][elementName])
+    }
+
+    const data = transactionsData.map((info) =>
+        info !== title ? <p className="transactionInfoItem">{info}</p> : <h3 className="transactionInfoItem">{info}</h3>
+    )
+
+    return data
 }
 
 function displayError(errorMessage) {
@@ -242,7 +345,7 @@ export const SearchInfo = () => {
             console.log(accountTransfers.transfers[0].hash)
             setAccountFirstTx(accountTransfers.transfers[0].hash)
             setAccountLastTx(accountTransfers.transfers[accountTransfers.transfers.length - 1].hash)
-
+            setAccountTxs(accountTransfers)
         }
 
         async function getDataForBlock() {
@@ -283,7 +386,8 @@ export const SearchInfo = () => {
             {pageToDisplay == PageType.Account && displayAccount(localStorage.getItem("searchInput"),
                                                                  accountEthBalance,
                                                                  accountFirstTx,
-                                                                 accountLastTx
+                                                                 accountLastTx,
+                                                                 accountTxs
                                                                  )}
                                                                   
             {pageToDisplay == PageType.Block && displayBlock(block,
