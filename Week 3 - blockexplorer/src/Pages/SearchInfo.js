@@ -2,6 +2,7 @@ import "../css/searchInfo.css"
 import { Alchemy, Network } from 'alchemy-sdk';
 import { useEffect, useState } from 'react';
 import { formatEther, formatUnits } from 'ethers'
+import { Link } from "react-router-dom";
 
 //alchemy
 const settings = {
@@ -18,6 +19,8 @@ const PageType = {
     Account: 2,
     Error : 3
 }
+
+const accountPageTransactions = 25;
 
 function displayTransaction(hash, status, block, timestamp, from, to, value, fee, gasPrice) {
     return (
@@ -164,16 +167,15 @@ function displayAccount(accountAddress, accountEthBalance, accountFirstTx, accou
                 </div>
                 
                 <div className="transactions"> 
-                    {console.log(accountTxs.transfers)}
-    
-                        <div className="transactionInfo">{displayTransactionInfo("Transaction Hash", accountTxs.transfers, 'hash', 10)}</div>
-                        <div className="transactionInfo">{displayTransactionInfo("Method", accountTxs.transfers, 'blockNum', 10)}</div>
-                        <div className="transactionInfo">{displayTransactionInfo("Block", accountTxs.transfers, 'blockNum', 10)}</div>
-                        <div className="transactionInfo">{displayTransactionInfo("Age", accountTxs.transfers, 'blockNum', 10)}</div>
-                        <div className="transactionInfo">{displayTransactionInfo("From", accountTxs.transfers, 'from', 10)}</div>
-                        <div className="transactionInfo">{displayTransactionInfo("To", accountTxs.transfers, 'to', 10)}</div>
-                        <div className="transactionInfo">{displayTransactionInfo("Value", accountTxs.transfers, 'value', 10)}</div>
-                        <div className="transactionInfo">{displayTransactionInfo("Txn Fee", accountTxs.transfers, 'blockNum', 10)}</div>
+
+                        <div className="transactionInfo">{displayTransactionInfo("Transaction Hash", accountTxs.transfers, 'hash', accountPageTransactions)}</div>
+                        <div className="transactionInfo">{displayTransactionInfo("Method", accountTxs.transfers, 'blockNum', accountPageTransactions)}</div>
+                        <div className="transactionInfo">{displayTransactionInfo("Block", accountTxs.transfers, 'blockNum', accountPageTransactions)}</div>
+                        <div className="transactionInfo">{displayTransactionInfo("Age", accountTxs.transfers, 'blockNum', accountPageTransactions)}</div>
+                        <div className="transactionInfo">{displayTransactionInfo("From", accountTxs.transfers, 'from', accountPageTransactions)}</div>
+                        <div className="transactionInfo">{displayTransactionInfo("To", accountTxs.transfers, 'to', accountPageTransactions)}</div>
+                        <div className="transactionInfo">{displayTransactionInfo("Value", accountTxs.transfers, 'value', accountPageTransactions)}</div>
+                        <div className="transactionInfo">{displayTransactionInfo("Txn Fee", accountTxs.transfers, 'blockNum', accountPageTransactions)}</div>
 
                    
                 </div>
@@ -193,11 +195,14 @@ function displayTransactionInfo(title, transactionArray, elementName, displayAmo
         let result = String(transactionArray[transactionArray.length - 1 - i][elementName])
 
         if (result.length == 66) {
-            result = `${result.substring(0, 19)}...`
+            result = SearchText(result, `${result.substring(0, 19)}}...`)
 
-        } else if (result.length == 42) (
-            result = `${result.substring(0, 8)}...${result.substring(result.length - 9, result.length - 1)}`
-        )
+        } else if (result.length == 42) {
+            result = SearchText(result, `${result.substring(0, 8)}...${result.substring(result.length - 9, result.length - 1)}`) 
+        
+        } else if (elementName != 'value') {
+            result = SearchText(result, parseInt(result)) 
+        }
         transactionsData.push(result)
     }
 
@@ -206,6 +211,19 @@ function displayTransactionInfo(title, transactionArray, elementName, displayAmo
     )
 
     return data
+}
+
+function SearchText(input, displayText){
+
+    async function handleClick() {
+        console.log(input)
+        await localStorage.setItem("searchInput", input)
+        await window.location.reload();
+    } 
+    return (<Link onClick={() => 
+                 {handleClick()}}
+                 >{displayText}
+            </Link>)
 }
 
 function displayError(errorMessage) {
@@ -337,10 +355,10 @@ export const SearchInfo = () => {
                 excludeZeroValue: true,
                 category: ["external", "erc20"]
             })
-            console.log(accountTransfers.transfers[0].hash)
-            setAccountFirstTx(accountTransfers.transfers[0].hash)
-            setAccountLastTx(accountTransfers.transfers[accountTransfers.transfers.length - 1].hash)
-            setAccountTxs(accountTransfers)
+
+            await setAccountFirstTx(accountTransfers.transfers[0].hash)
+            await setAccountLastTx(accountTransfers.transfers[accountTransfers.transfers.length - 1].hash)
+            await setAccountTxs(accountTransfers)
         }
 
         async function getDataForBlock() {

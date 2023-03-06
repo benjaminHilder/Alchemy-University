@@ -25,6 +25,25 @@ function substring(text, start, end) {
     return text.substring(start, end)
 }
 
+function SearchText(input){
+
+    function handleClick() {
+        localStorage.setItem("searchInput", input)
+    }
+
+    let displayText = input
+
+    if (input.length > 20) {
+        displayText = `${substring(input, 0, 6)}...${substring(input, input.length - 6, input.length)}`
+    } 
+
+    return (<Link to="/SearchInfo"
+                  className = "searchText"
+                  onClick={handleClick}
+                  >{displayText}
+            </Link>)
+}
+
 function latestEntries (leftData, centerTopData, centerBottomData, type) {
     //easier to read
     leftData = String(leftData);
@@ -33,19 +52,19 @@ function latestEntries (leftData, centerTopData, centerBottomData, type) {
 
     return (
         <div className="homeLatestInfoTemplate">
-            {type == latestEntriesType.blocks && <h3 style={{width: "30%"}}>{leftData}</h3>}
-            {type == latestEntriesType.transactions && <h3 style={{width: "30%"}}>{substring(leftData, 0, 12)}...</h3>}
+            {type == latestEntriesType.blocks && <h3 style={{width: "30%"}}>{SearchText(leftData)}</h3>}
+            {type == latestEntriesType.transactions && <h3 style={{width: "30%"}}>{SearchText(leftData)}</h3>}
         
             <div className="homeLatestInfoCenter" style={{width: "30%"}}>
 
                 <div className="homeLatestInfoCenterRow">
-                    {type == latestEntriesType.blocks && <h3>miner: {substring(centerTopData, 0, 6)}...{substring(centerTopData, centerTopData.length - 6, centerTopData.length)}</h3>}
-                    {type == latestEntriesType.transactions && <h3>from: {substring(centerTopData, 0, 6)}...{substring(centerTopData, centerTopData.length - 6, centerTopData.length)}</h3>}
+                    {type == latestEntriesType.blocks && <h3>Miner: {SearchText(centerTopData)}</h3>}
+                    {type == latestEntriesType.transactions && <h3>From: {SearchText(centerTopData)}</h3>}
                 </div>
 
                 <div className="homeLatestInfoCenterRow">
-                    {type == latestEntriesType.blocks && <h3>txs:      {centerBottomData}</h3>}
-                    {type == latestEntriesType.transactions && <h3>to:      {substring(centerBottomData, 0, 6)}...{substring(centerBottomData, centerBottomData.length - 6, centerBottomData.length)}</h3>}
+                    {type == latestEntriesType.blocks && <h3>Txs:      {centerBottomData}</h3>}
+                    {type == latestEntriesType.transactions && <h3>To:      {SearchText(centerBottomData)}</h3>}
 
                 </div>
             </div>
