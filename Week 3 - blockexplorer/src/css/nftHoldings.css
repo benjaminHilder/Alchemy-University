@@ -1,12 +1,18 @@
 .main {
     display: flex;
     flex-direction: column;
+    align-content: center;
 }
 
 .nftDisplay {
     display: flex;
     flex-direction: row;
     order: 2;
+    flex-wrap: wrap;
+    width: 81.49%;
+
+    border:solid;
+    border-radius: 0.5vh;
 }
 
 .nftImage {
