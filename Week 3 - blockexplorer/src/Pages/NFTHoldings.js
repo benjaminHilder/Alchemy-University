@@ -14,15 +14,13 @@ const alchemy = new Alchemy(settings);
 function displayNftImage(imageURL) {
     return (
         <div>
-            <img src = {imageURL} alt="nftImage"/>
+            <img src = {imageURL} alt="nftImage"
+            className="nftImage"/>
         </div>
-
     )
 }
 
 export const NFTHoldings = () => {
-    //const [nftContractAddresses, setNftContractAddresses] = useState()
-    //const [nftIds, setNftIds] = useState()
     const [nftInfo, setNftInfo] = useState()
     const [nftImageURL, setNftImageURL] = useState()
 
@@ -46,7 +44,7 @@ export const NFTHoldings = () => {
 
         setNftInfo(newNftInfo)
         
-        let nftMetadatas = await alchemy.nft.getNftMetadataBatch(newNftInfo)
+        const nftMetadatas = await alchemy.nft.getNftMetadataBatch(newNftInfo)
 
         for (let i = 0; i < nftMetadatas.length; i++) {
             if (nftMetadatas[i].media[0] != undefined) {
@@ -59,7 +57,10 @@ export const NFTHoldings = () => {
 
     return (
         <div className="main">
-            {nftImageURL && nftImageURL.map(image => displayNftImage(image))}
+            <div className="nftDisplay">
+                {nftImageURL && nftImageURL.map(image => displayNftImage(image))}
+            </div>
+            
         </div>
         
     )

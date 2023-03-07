@@ -1,0 +1,15 @@
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+.nftDisplay {
+    display: flex;
+    flex-direction: row;
+    order: 2;
+}
+
+.nftImage {
+    height: 20vh;
+    width: 20vh;
+}
