@@ -21,39 +21,65 @@ function displayNftImage(imageURL) {
 }
 
 export const NFTHoldings = () => {
-    const [nftContractAddresses, setNftContractAddresses] = useState()
-    const [nftIds, setNftIds] = useState()
+    //const [nftContractAddresses, setNftContractAddresses] = useState()
+    //const [nftIds, setNftIds] = useState()
+    const [nftInfo, setNftInfo] = useState()
     const [nftImageURL, setNftImageURL] = useState()
 
     useEffect(async() => {
-        if (nftContractAddresses === undefined || nftIds === undefined) {
+        
 
         const searchInput = localStorage.getItem("searchInput")
 
         const result = await alchemy.nft.getNftsForOwner(searchInput)
         const nfts = await result.ownedNfts
 
-        const newNftContractAddresses = []
-        const newNftIds = []
+        //const newNftContractAddresses = []
+        //const newNftIds = []
+
+        const newNftInfo = []
         const newNftImageURL = []
 
         console.log(`${nfts}`)
 
         for (let i = 0; i < nfts.length; i++) {
-            await newNftContractAddresses.push(nfts[i].contract.address)
-            await newNftIds.push(nfts[i].tokenId)
+            await newNftInfo.push({
+                contractAddress: nfts[i].contract.address,
+                tokenId: nfts[i].tokenId,
+                tokenType: "ERC721"
+            })
+            //await newNftContractAddresses.push(nfts[i].contract.address)
+            //await newNftIds.push(nfts[i].tokenId)
 
-            const nftMetadata = await alchemy.nft.getNftMetadata(nfts[i].contract.address, nfts[i].tokenId)
+            //const nftMetadata = await alchemy.nft.getNftMetadata(nfts[i].contract.address, nfts[i].tokenId)
+//
+            //if (nftMetadata.media[0] != undefined) {
+            //    newNftImageURL.push(nftMetadata.media[0].gateway)
+            //}
+        }
 
-            if (nftMetadata.media[0] != undefined) {
-                newNftImageURL.push(nftMetadata.media[0].gateway)
+
+
+        console.log("done setting up")
+
+        //setNftContractAddresses(newNftContractAddresses)
+        //setNftIds(newNftIds)
+
+        setNftInfo(newNftInfo)
+        
+        let nftMetadatas = await alchemy.nft.getNftMetadataBatch(newNftInfo)
+
+        console.log("done getting images")
+
+        for (let i = 0; i < nftMetadatas.length; i++) {
+            if (nftMetadatas[i].media[0] != undefined) {
+                newNftImageURL.push(nftMetadatas[i].media[0].gateway)
             }
         }
 
-        setNftContractAddresses(newNftContractAddresses)
-        setNftIds(newNftIds)
+        console.log(newNftImageURL)
         setNftImageURL(newNftImageURL)
-    }
+
     })
 
     return (
