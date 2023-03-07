@@ -24,7 +24,7 @@ const accountPageTransactions = 25;
 
 function displayTransaction(hash, status, block, timestamp, from, to, value, fee, gasPrice) {
     return (
-        <div>
+        <div className="transactionMain">
             <h1>Transaction</h1>
 
             <div className="transaction">
@@ -62,7 +62,7 @@ function displayTransaction(hash, status, block, timestamp, from, to, value, fee
 
 function displayBlock(blockHeight, status, timestamp, transactions, feeRecipient, totalDifficulty, gasUsed, gasLimit, baseFeePerGas, extraData) {
     return (
-        <div>
+        <div className="blockMain">
             <h1>Block</h1>
 
             <div className="block">

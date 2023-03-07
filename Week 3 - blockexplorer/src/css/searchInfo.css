@@ -31,13 +31,14 @@
   justify-content: center;
 }
 /*******************************/
+.transactionMain {
+  width: 60%
+}
 .transaction {
   display:flex;
   align-content: flex-start;
   border:solid;
   border-radius: 0.6vh;
-  
-  width: 100%;
   
   position: relative;
   transform: translateY(10%);
@@ -55,13 +56,16 @@
 }
 
 /*******************************/
+
+.blockMain {
+  width: 50%
+}
 .block {
   display:flex;
   align-content: flex-start;
   border:solid;
   border-radius: 0.6vh;
   
-  width: 100%;
   
   position: relative;
   transform: translateY(10%);
