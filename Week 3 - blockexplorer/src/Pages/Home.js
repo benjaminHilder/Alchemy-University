@@ -70,7 +70,7 @@ function latestEntries (leftData, centerTopData, centerBottomData, type) {
             </div>
 
             <div style={{width: "30%"}}>{/*styling*/}
-                <Link to="/SearchInfo" className="homeLatestInfoButtons" 
+                <Link to="/SearchInfo" className="searchButton" 
                         onClick={() => localStorage.setItem("searchInput", leftData)}
                         >More Info
                 </Link> 
@@ -114,7 +114,7 @@ export const Home = () => {
         <div className="homeSearchArea">
             <input style={{ height: "2.5vh"}} onChange={(e) => setSearchInput(e.target.value)}></input>
             
-            <Link to="/SearchInfo" onClick={() => localStorage.setItem("searchInput", searchInput)}>search</Link>
+            <Link to="/SearchInfo" className="searchButton" onClick={() => localStorage.setItem("searchInput", searchInput)}>search</Link>
         </div>
 
 

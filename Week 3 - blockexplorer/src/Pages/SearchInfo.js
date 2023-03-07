@@ -24,33 +24,37 @@ const accountPageTransactions = 25;
 
 function displayTransaction(hash, status, block, timestamp, from, to, value, fee, gasPrice) {
     return (
-        <div className="transaction">
-            <div className="titles">
-                <h3>Transaction Hash:</h3>
-                <h3>Status:</h3>
-                <h3>Block:</h3>
-                <h3>Timestamp:</h3>
+        <div>
+            <h1>Transaction</h1>
 
-                <h3>From:</h3>
-                <h3>To:</h3>
+            <div className="transaction">
+                <div className="titles">
+                    <h3>Transaction Hash:</h3>
+                    <h3>Status:</h3>
+                    <h3>Block:</h3>
+                    <h3>Timestamp:</h3>
 
-                <h3>Value:</h3>
-                <h3>Transaction Fee:</h3>
-                <h3>Gas Price:</h3>
-            </div>
+                    <h3>From:</h3>
+                    <h3>To:</h3>
 
-            <div className="data">
-                <h3>{hash}</h3>
-                <h3>{status}</h3>
-                <h3>{block}</h3>
-                <h3>{timestamp}</h3>
-        
-                <h3>{from}</h3>
-                <h3>{to}</h3>
-        
-                <h3>{value} ETH</h3>
-                <h3>{fee}</h3>
-                <h3>{gasPrice}</h3>
+                    <h3>Value:</h3>
+                    <h3>Transaction Fee:</h3>
+                    <h3>Gas Price:</h3>
+                </div>
+
+                <div className="data">
+                    <h3 className="searchText">{SearchText(hash, hash)}</h3>
+                    <h3>{status}</h3>
+                    <h3 className="searchText">{SearchText(block, block)}</h3>
+                    <h3>{timestamp}</h3>
+
+                    <h3 className="searchText">{SearchText(from, from)}</h3>
+                    <h3 className="searchText">{SearchText(to, to)}</h3>
+
+                    <h3>{value} ETH</h3>
+                    <h3>{fee}</h3>
+                    <h3>{gasPrice}</h3>
+                </div>
             </div>
         </div>
     )
@@ -58,36 +62,40 @@ function displayTransaction(hash, status, block, timestamp, from, to, value, fee
 
 function displayBlock(blockHeight, status, timestamp, transactions, feeRecipient, totalDifficulty, gasUsed, gasLimit, baseFeePerGas, extraData) {
     return (
-        <div className="block">
-            <div className="titles">
-                <h3>Block Height:</h3>
-                <h3>Status:</h3>
-                <h3>Timestamp</h3>
-                <h3>Transactions:</h3>
+        <div>
+            <h1>Block</h1>
 
-                <h3>Fee Recipient:</h3>
-                <h3>Total Difficulty:</h3>
+            <div className="block">
+                <div className="titles">
+                    <h3>Block Height:</h3>
+                    <h3>Status:</h3>
+                    <h3>Timestamp</h3>
+                    <h3>Transactions:</h3>
+
+                    <h3>Fee Recipient:</h3>
+                    <h3>Total Difficulty:</h3>
 
 
-                <h3>Gas Used:</h3>
-                <h3>Gas Limit:</h3>
-                <h3>Base Fee Per Gas:</h3>
-                <h3>Extra Data:</h3>
-            </div>
+                    <h3>Gas Used:</h3>
+                    <h3>Gas Limit:</h3>
+                    <h3>Base Fee Per Gas:</h3>
+                    <h3>Extra Data:</h3>
+                </div>
 
-            <div className="data">
-                <h3>{blockHeight}</h3>
-                <h3>{status}</h3>
-                <h3>{timestamp}</h3>
-                <h3>{transactions}</h3>
-    
-                <h3>{feeRecipient}</h3>
-                <h3>{totalDifficulty}</h3>
+                <div className="data">
+                    <h3 className="searchText">{SearchText(blockHeight, blockHeight) }</h3>
+                    <h3>{status}</h3>
+                    <h3>{timestamp}</h3>
+                    <h3>{transactions}</h3>
+        
+                    <h3 className="searchText">{SearchText(feeRecipient, feeRecipient)}</h3>
+                    <h3>{totalDifficulty}</h3>
 
-                <h3>{gasUsed}</h3>
-                <h3>{gasLimit}</h3>
-                <h3>{baseFeePerGas}</h3>
-                <h3>{extraData}</h3>
+                    <h3>{gasUsed}</h3>
+                    <h3>{gasLimit}</h3>
+                    <h3>{baseFeePerGas}</h3>
+                    <h3>{extraData}</h3>
+                </div>
             </div>
         </div>
     )
@@ -169,15 +177,11 @@ function displayAccount(accountAddress, accountEthBalance, accountFirstTx, accou
                 <div className="transactions"> 
 
                         <div className="transactionInfo">{displayTransactionInfo("Transaction Hash", accountTxs.transfers, 'hash', accountPageTransactions)}</div>
-                        <div className="transactionInfo">{displayTransactionInfo("Method", accountTxs.transfers, 'blockNum', accountPageTransactions)}</div>
                         <div className="transactionInfo">{displayTransactionInfo("Block", accountTxs.transfers, 'blockNum', accountPageTransactions)}</div>
-                        <div className="transactionInfo">{displayTransactionInfo("Age", accountTxs.transfers, 'blockNum', accountPageTransactions)}</div>
                         <div className="transactionInfo">{displayTransactionInfo("From", accountTxs.transfers, 'from', accountPageTransactions)}</div>
                         <div className="transactionInfo">{displayTransactionInfo("To", accountTxs.transfers, 'to', accountPageTransactions)}</div>
                         <div className="transactionInfo">{displayTransactionInfo("Value", accountTxs.transfers, 'value', accountPageTransactions)}</div>
-                        <div className="transactionInfo">{displayTransactionInfo("Txn Fee", accountTxs.transfers, 'blockNum', accountPageTransactions)}</div>
 
-                   
                 </div>
             </div>
             {/*************************************/}
@@ -195,12 +199,15 @@ function displayTransactionInfo(title, transactionArray, elementName, displayAmo
         let result = String(transactionArray[transactionArray.length - 1 - i][elementName])
 
         if (result.length == 66) {
-            result = SearchText(result, `${result.substring(0, 19)}}...`)
+            result = SearchText(result, `${result.substring(0, 19)}...`)
 
         } else if (result.length == 42) {
             result = SearchText(result, `${result.substring(0, 8)}...${result.substring(result.length - 9, result.length - 1)}`) 
         
-        } else if (elementName != 'value') {
+        } else if (elementName == 'value') {
+            result = String(Number(result).toFixed(7)) + " ETH"
+            
+        } else if (elementName == 'blockNum') {
             result = SearchText(result, parseInt(result)) 
         }
         transactionsData.push(result)
@@ -220,7 +227,8 @@ function SearchText(input, displayText){
         await localStorage.setItem("searchInput", input)
         await window.location.reload();
     } 
-    return (<Link onClick={() => 
+    return (<Link className="linkText"
+                  onClick={() => 
                  {handleClick()}}
                  >{displayText}
             </Link>)

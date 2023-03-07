@@ -9,8 +9,7 @@
 
 a {
   color: inherit;
-  font-size: 2vh;
-  font-weight: bold;
+  font-size: 1.7vh;
   padding:0;
   margin:0;
   text-decoration: none;
@@ -58,7 +57,7 @@ a:hover {
 .homeSearchArea input {
   border: solid;
   border-radius: 0.4vh;
-  border-width: 0.3vh;
+  border-width: 0.4vh;
 
   position: relative;
 
@@ -139,4 +138,24 @@ a:hover {
 
 .searchText {
   border-color: white;
+  font-size: 2vh;
+}
+
+.searchButton {
+  font-size: 2vh;
+  font-weight: bold;
+  color: black;
+
+  border: solid;
+  border-radius: 0.5vh;
+
+  padding-left: 1vh;
+  padding-right: 1vh;
+  margin-left: 1vh;
+}
+
+.searchButton:hover {
+  border-color: black;
+  background-color: black;
+  color:white;
 }

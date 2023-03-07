@@ -37,7 +37,7 @@
   border:solid;
   border-radius: 0.6vh;
   
-  width: 60%;
+  width: 100%;
   
   position: relative;
   transform: translateY(10%);
@@ -53,6 +53,7 @@
 .transaction > .data {
   text-align: left;
 }
+
 /*******************************/
 .block {
   display:flex;
@@ -60,7 +61,7 @@
   border:solid;
   border-radius: 0.6vh;
   
-  width: 60%;
+  width: 100%;
   
   position: relative;
   transform: translateY(10%);
@@ -160,3 +161,7 @@
 }
 
 /*******************************/
+
+.searchText > .linkText{
+  font-size:2vh
+}

@@ -1,0 +1,17 @@
+.NavButton {
+    font-size: 2vh;
+    font-weight: bold;
+    color: black;
+
+    border: solid;
+    border-radius: 1vh;
+
+    padding: 1vh;
+    margin:1vh;
+}
+
+.NavButton:hover {
+    border-color: black;
+    background-color: black;
+    color:white;
+}
