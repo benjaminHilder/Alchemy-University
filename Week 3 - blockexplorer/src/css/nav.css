@@ -6,8 +6,13 @@
     border: solid;
     border-radius: 1vh;
 
-    padding: 1vh;
-    margin:1vh;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    padding-bottom: 0.5vh;
+    padding-top: 0.5vh;
+
+    margin-left:1vh;
+    margin-right:1vh;
 }
 
 .NavButton:hover {

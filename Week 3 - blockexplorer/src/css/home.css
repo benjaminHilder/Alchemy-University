@@ -91,6 +91,7 @@ a:hover {
   border: solid;
   border-radius: 1vh;
   border-color: black;
+  border-bottom-color: white;
   width:99%;
   height: 132vh;
 }
@@ -103,6 +104,8 @@ a:hover {
 
   border-bottom: solid;
   border-color: black;
+
+  height: 12.9vh;
 }
 
 .homeLatestInfoCenter {
