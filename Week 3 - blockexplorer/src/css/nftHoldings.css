@@ -11,7 +11,7 @@
     align-content: flex-start;
     flex-wrap: wrap;
     width: 80.75%;
-    height: 81.27vh;
+    height: 80vh;
 
     border:solid;
     border-radius: 0.5vh;
@@ -45,7 +45,11 @@
     gap: 10%;
 
     position: absolute;
-    transform: translate(18%, -500%);
+    transform: translate(8%,-400%);
+}
+
+.imageButton img{
+    width: 1vh;
 }
 
 .nftButtons button{

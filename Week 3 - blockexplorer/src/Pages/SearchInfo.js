@@ -102,6 +102,8 @@ function displayBlock(blockHeight, status, timestamp, transactions, feeRecipient
 }
 
 function displayAccount(accountAddress, accountEthBalance, accountFirstTx, accountLastTx, accountTxs) {
+    
+    
     return (
         <div className="account">
             <h3>Account Address: {accountAddress}</h3>
@@ -141,8 +143,8 @@ function displayAccount(accountAddress, accountEthBalance, accountFirstTx, accou
                         </div>
 
                         <div className="data">
-                            <p>{accountFirstTx.substring(0, 8)}...{accountFirstTx.substring(accountFirstTx.length - 8, accountFirstTx.length)}</p>
-                            <p>{accountLastTx.substring(0, 8)}...{accountLastTx.substring(accountLastTx.length - 8, accountLastTx.length)}</p>
+                            <p>{SearchText(accountFirstTx,`${accountFirstTx.substring(0, 8)}...${accountFirstTx.substring(accountFirstTx.length - 8, accountFirstTx.length)}`)}</p>
+                            <p>{SearchText(accountLastTx,`${accountLastTx.substring(0, 8)}...${accountLastTx.substring(accountLastTx.length - 8, accountLastTx.length)}`)}</p>
                         </div>
 
                     </div>
@@ -151,17 +153,19 @@ function displayAccount(accountAddress, accountEthBalance, accountFirstTx, accou
 
                 <div className="topInfoBox">
 
-                    <h3 className="title">Multichain</h3>
+                    <h3 className="title">Other Balances</h3>
                     <div className="topInfoBoxInner">
 
                         <div className="titles"> 
-                            <p>Account First Tx:</p>
-                            <p>Account Last Tx:</p>
+                            <p>Tokens:</p>
+                            <p>NFTs:</p>
                         </div>
 
                         <div className="data">
-                            <p>{accountFirstTx.substring(0, 8)}...{accountFirstTx.substring(accountFirstTx.length - 8, accountFirstTx.length)}</p>
-                            <p>{accountLastTx.substring(0, 8)}...{accountLastTx.substring(accountLastTx.length - 8, accountLastTx.length)}</p>
+                            {/*p tag for styling*/}
+                            <p><Link to="/TokenHoldings" className="getBalanceButton" >Get Token balances</Link></p>
+                            
+                            <p><Link to="/NFTHoldings" className="getBalanceButton">Get NFTs</Link> </p>
                         </div>
 
                     </div>

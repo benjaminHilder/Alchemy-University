@@ -1,6 +1,10 @@
 import "../css/nftHoldings.css"
+import etherscanLogo from "../images/etherscanLogo.png"
+import openseaLogo from "../images/openseaLogo.png"
 import { Alchemy, Network } from 'alchemy-sdk';
 import { useEffect, useState } from 'react';
+
+
 
 //alchemy
 const settings = {
@@ -74,9 +78,19 @@ export const NFTHoldings = () => {
 
                     {hoveredIndex === index && (
                         <div className="nftButtons"> 
-                            {console.log(nftInfo[index])}
-                            <button><a href={`https://opensea.io/assets/ethereum/${nftInfo[index].contractAddress}/${nftInfo[index].tokenId}`}>opensea</a></button>
-                            <button><a href={`https://etherscan.io/address/${nftInfo[index].contractAddress}/${nftInfo[index].tokenId}`}>etherscan</a></button>
+
+                            <button >
+                                <a href={`https://opensea.io/assets/ethereum/${nftInfo[index].contractAddress}/${nftInfo[index].tokenId}`}>
+                                    opensea
+                                </a>
+                            </button>
+
+                            <button >
+                                <a href={`https://etherscan.io/address/${nftInfo[index].contractAddress}/${nftInfo[index].tokenId}`}>
+                                    etherscan
+                                </a>
+                            </button>
+
                         </div>   
                     )}
                 </div>

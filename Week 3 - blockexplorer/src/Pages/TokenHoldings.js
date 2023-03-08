@@ -1,4 +1,4 @@
-import "../css/nftHoldings.css"
+import "../css/tokenHoldings.css"
 import { Alchemy, Network } from 'alchemy-sdk';
 import { useEffect, useState } from 'react';
 
@@ -10,6 +10,27 @@ const settings = {
 
 const alchemy = new Alchemy(settings);
 //alchemy
+
+function displayBalanceInfo(title, balanceArray, displayAmount) {
+    if (balanceArray === undefined) return;
+
+    const balanceData = [title]
+    
+
+    for(let i = 0; i < displayAmount; i++) {
+        if (title === "Balance" ) {
+            balanceData.push(String(parseInt(balanceArray[balanceArray.length - 1 - i]).toFixed(8)))
+        } else {
+            balanceData.push(String(balanceArray[balanceArray.length - 1 - i]))
+        }
+    } 
+
+    const data = balanceData.map((info) =>
+        info !== title ? <p>{info}</p> : <h3>{info}</h3>
+    )
+
+    return data;
+}
 
 export const TokenHoldings = () => {
     const [tokenContractAddresses, setTokenContractAddresses] = useState()
@@ -37,8 +58,12 @@ export const TokenHoldings = () => {
 
     return (
         <div className="main">
-            {tokenContractAddresses}
-            {tokenBalances}
+            <h3>Token Balances for {localStorage.getItem("searchInput")}</h3>
+            
+            <div className="balances">
+                <div className="balanceInfo">{displayBalanceInfo("Address", tokenContractAddresses, 10)}</div>
+                <div className="balanceInfo">{displayBalanceInfo("Balance", tokenBalances, 10)}</div>
+            </div>
         </div>
         
     )
