@@ -68,15 +68,15 @@ export const NFTHoldings = () => {
                         className="imageContainer"
                         onMouseEnter={() => {setHoveredIndex(index)}}
                         onMouseLeave={() => {setHoveredIndex(false)}}
-                >
+                    >
+
                     <img src={imageURL} onError={handleImageError} />
 
                     {hoveredIndex === index && (
                         <div className="nftButtons"> 
-                            <button>etherscan</button>
-                            <button>opensea</button>
-      
-
+                            {console.log(nftInfo[index])}
+                            <button><a href={`https://opensea.io/assets/ethereum/${nftInfo[index].contractAddress}/${nftInfo[index].tokenId}`}>opensea</a></button>
+                            <button><a href={`https://etherscan.io/address/${nftInfo[index].contractAddress}/${nftInfo[index].tokenId}`}>etherscan</a></button>
                         </div>   
                     )}
                 </div>
