@@ -11,21 +11,22 @@ const settings = {
 const alchemy = new Alchemy(settings);
 //alchemy
 
-function displayNftImage(imageURL) {
-    return (
-        <div>
-            <img src = {imageURL} alt="nftImage"
-            className="nftImage"/>
-        </div>
-    )
+function handleImageError(event) {
+    event.target.style.display = 'none';
 }
 
 export const NFTHoldings = () => {
     const [nftInfo, setNftInfo] = useState()
     const [nftImageURL, setNftImageURL] = useState()
 
+    const [hasReturnedNfts, setHasReturnedNfts] = useState(false)
+
+    const [hoveredIndex, setHoveredIndex] = useState(null)
+
     useEffect(async() => {
-        const searchInput = localStorage.getItem("searchInput")
+        if (hasReturnedNfts == true) return
+
+        const searchInput = await localStorage.getItem("searchInput")
 
         const result = await alchemy.nft.getNftsForOwner(searchInput)
         const nfts = await result.ownedNfts
@@ -42,23 +43,52 @@ export const NFTHoldings = () => {
             })
         }
 
-        setNftInfo(newNftInfo)
+        await setNftInfo(newNftInfo)
         
         const nftMetadatas = await alchemy.nft.getNftMetadataBatch(newNftInfo)
 
         for (let i = 0; i < nftMetadatas.length; i++) {
-            if (nftMetadatas[i].media[0] != undefined) {
-                newNftImageURL.push(nftMetadatas[i].media[0].gateway)
+            
+            if (nftMetadatas[i].media[0] != undefined ) {
+                await newNftImageURL.push(nftMetadatas[i].media[0].gateway)
             }
         }
 
-        setNftImageURL(newNftImageURL)
+        await setNftImageURL(newNftImageURL)
+        await setHasReturnedNfts(true)
     })
+
+    //function DisplayNftImage(imageURL) {
+    //    let isHovered = false
+    //
+    //    return (
+    //        <div>
+    //            
+    //        </div>
+    //    )
+    //}
 
     return (
         <div className="main">
+            <h2>Nft holdings for account {localStorage.getItem("searchInput")}</h2>
             <div className="nftDisplay">
-                {nftImageURL && nftImageURL.map(image => displayNftImage(image))}
+
+                {nftImageURL && nftImageURL.map((imageURL, index) => (
+                    <div 
+                        className="imageContainer"
+                        onMouseEnter={() => {setHoveredIndex(index)}}
+                        onMouseLeave={() => {setHoveredIndex(false)}}
+                >
+                    <img src={imageURL} onError={handleImageError} />
+                    {hoveredIndex === index && (
+                        <>
+                        {console.log(`showing`)}
+                            <button >opensea</button>
+                            <button >etherscan</button>
+                        </>
+                    )}
+                </div>
+                ))}
             </div>
             
         </div>
