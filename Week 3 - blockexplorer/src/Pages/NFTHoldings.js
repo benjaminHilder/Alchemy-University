@@ -58,16 +58,6 @@ export const NFTHoldings = () => {
         await setHasReturnedNfts(true)
     })
 
-    //function DisplayNftImage(imageURL) {
-    //    let isHovered = false
-    //
-    //    return (
-    //        <div>
-    //            
-    //        </div>
-    //    )
-    //}
-
     return (
         <div className="main">
             <h2>Nft holdings for account {localStorage.getItem("searchInput")}</h2>
@@ -80,12 +70,14 @@ export const NFTHoldings = () => {
                         onMouseLeave={() => {setHoveredIndex(false)}}
                 >
                     <img src={imageURL} onError={handleImageError} />
+
                     {hoveredIndex === index && (
-                        <>
-                        {console.log(`showing`)}
-                            <button >opensea</button>
-                            <button >etherscan</button>
-                        </>
+                        <div className="nftButtons"> 
+                            <button>etherscan</button>
+                            <button>opensea</button>
+      
+
+                        </div>   
                     )}
                 </div>
                 ))}
