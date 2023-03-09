@@ -118,14 +118,10 @@ function displayAccount(accountAddress, accountEthBalance, accountFirstTx, accou
 
                         <div className="titles"> 
                             <p>Account Eth Balance:</p>
-                            <p>val</p>
-                            <p>val</p>
                         </div>
 
                         <div className="data">
                             <p>{accountEthBalance} ETH</p>
-                            <p>val</p>
-                            <p>val</p>
                         </div>
 
                     </div>
@@ -143,8 +139,8 @@ function displayAccount(accountAddress, accountEthBalance, accountFirstTx, accou
                         </div>
 
                         <div className="data">
-                            <p>{SearchText(accountFirstTx,`${accountFirstTx.substring(0, 8)}...${accountFirstTx.substring(accountFirstTx.length - 8, accountFirstTx.length)}`)}</p>
-                            <p>{SearchText(accountLastTx,`${accountLastTx.substring(0, 8)}...${accountLastTx.substring(accountLastTx.length - 8, accountLastTx.length)}`)}</p>
+                            <p>{accountFirstTx == "Loading..."? accountFirstTx: SearchText(accountFirstTx,`${accountFirstTx.substring(0, 8)}...${accountFirstTx.substring(accountFirstTx.length - 8, accountFirstTx.length)}`)}</p>
+                            <p>{accountLastTx == "Loading..."? accountLastTx: SearchText(accountLastTx,`${accountLastTx.substring(0, 8)}...${accountLastTx.substring(accountLastTx.length - 8, accountLastTx.length)}`)}</p>
                         </div>
 
                     </div>
@@ -196,8 +192,8 @@ function displayAccount(accountAddress, accountEthBalance, accountFirstTx, accou
 function displayTransactionInfo(title, transactionArray, elementName, displayAmount) {
     if (transactionArray === undefined) return;
 
+    //place the title as the start of the array
     const transactionsData = [title]
-
 
     for(let i = 0; i < displayAmount; i++) {
         let result = String(transactionArray[transactionArray.length - 1 - i][elementName])
@@ -218,6 +214,7 @@ function displayTransactionInfo(title, transactionArray, elementName, displayAmo
     }
 
     const data = transactionsData.map((info) =>
+    //if info equal the value of title display info as a h3
         info !== title ? <p className="transactionInfoItem">{info}</p> : <h3 className="transactionInfoItem">{info}</h3>
     )
 

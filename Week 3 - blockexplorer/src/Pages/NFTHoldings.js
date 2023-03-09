@@ -27,6 +27,48 @@ export const NFTHoldings = () => {
 
     const [hoveredIndex, setHoveredIndex] = useState(null)
 
+    function loadingDiv() {
+        return (
+            <div className="loading">
+                <h3>Loading...</h3>
+            </div>
+        )
+    }
+    function nftDisplayDiv() {
+        return (
+            <div className="nftDisplay">
+                {nftImageURL && nftImageURL.map((imageURL, index) => (
+                    <div 
+                        className="imageContainer"
+                        onMouseEnter={() => {setHoveredIndex(index)}}
+                        onMouseLeave={() => {setHoveredIndex(false)}}
+                    >
+
+                    <img src={imageURL} onError={handleImageError} />
+
+                    {hoveredIndex === index && (
+                        <div className="nftButtons"> 
+
+                            <button >
+                                <a href={`https://opensea.io/assets/ethereum/${nftInfo[index].contractAddress}/${nftInfo[index].tokenId}`}>
+                                    opensea
+                                </a>
+                            </button>
+
+                            <button >
+                                <a href={`https://etherscan.io/address/${nftInfo[index].contractAddress}/${nftInfo[index].tokenId}`}>
+                                    etherscan
+                                </a>
+                            </button>
+
+                        </div>   
+                    )}
+                </div>
+                ))}
+            </div>
+        )
+    }
+
     useEffect(async() => {
         if (hasReturnedNfts == true) return
 
@@ -65,38 +107,8 @@ export const NFTHoldings = () => {
     return (
         <div className="main">
             <h2>Nft holdings for account {localStorage.getItem("searchInput")}</h2>
-            <div className="nftDisplay">
 
-                {nftImageURL && nftImageURL.map((imageURL, index) => (
-                    <div 
-                        className="imageContainer"
-                        onMouseEnter={() => {setHoveredIndex(index)}}
-                        onMouseLeave={() => {setHoveredIndex(false)}}
-                    >
-
-                    <img src={imageURL} onError={handleImageError} />
-
-                    {hoveredIndex === index && (
-                        <div className="nftButtons"> 
-
-                            <button >
-                                <a href={`https://opensea.io/assets/ethereum/${nftInfo[index].contractAddress}/${nftInfo[index].tokenId}`}>
-                                    opensea
-                                </a>
-                            </button>
-
-                            <button >
-                                <a href={`https://etherscan.io/address/${nftInfo[index].contractAddress}/${nftInfo[index].tokenId}`}>
-                                    etherscan
-                                </a>
-                            </button>
-
-                        </div>   
-                    )}
-                </div>
-                ))}
-            </div>
-            
+            {nftImageURL ? nftDisplayDiv() : loadingDiv()}
         </div>
         
     )

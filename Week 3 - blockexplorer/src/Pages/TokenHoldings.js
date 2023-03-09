@@ -34,7 +34,9 @@ function displayBalanceInfo(title, balanceArray, displayAmount) {
 
 export const TokenHoldings = () => {
     const [tokenContractAddresses, setTokenContractAddresses] = useState()
+    const [tokenNames, setTokenNames] = useState()
     const [tokenBalances, setTokenBalances] = useState()
+    const [tokenSymbol, setTokenSymbol] = useState()
 
     useEffect(async() => {
 
@@ -43,17 +45,27 @@ export const TokenHoldings = () => {
         const tokenData = await alchemy.core.getTokenBalances(searchInput)
         const tokenBalances = tokenData.tokenBalances
 
-
         const newTokenContractAddresses = []
         const newTokenBalances = []
+        const newTokenNames = []
+        const newTokenSymbol = []
 
         for (let i = 0; i < tokenBalances.length; i++) {
             newTokenContractAddresses.push(tokenBalances[i].contractAddress)
             newTokenBalances.push(tokenBalances[i].tokenBalance)
+
+            //const tokenMetadata = await alchemy.core.getTokenMetadata(tokenBalances[i].contractAddress)
+            //newTokenNames.push(tokenMetadata)
+            //newTokenNames.push()
+            //console.log(tokenMetadata)
+            //newTokenNames.push(tokenMetadata.name)
+            //newTokenSymbol.push(tokenMetadata.symbol)
         }
 
         setTokenContractAddresses(newTokenContractAddresses)
         setTokenBalances(newTokenBalances)
+        setTokenNames(newTokenNames)
+        setTokenSymbol(newTokenSymbol)
     })
 
     return (
@@ -61,8 +73,8 @@ export const TokenHoldings = () => {
             <h3>Token Balances for {localStorage.getItem("searchInput")}</h3>
             
             <div className="balances">
-                <div className="balanceInfo">{displayBalanceInfo("Address", tokenContractAddresses, 10)}</div>
-                <div className="balanceInfo">{displayBalanceInfo("Balance", tokenBalances, 10)}</div>
+                <div className="balanceInfo">{tokenContractAddresses && displayBalanceInfo("Address", tokenContractAddresses, tokenContractAddresses.length)}</div>
+                <div className="balanceInfo">{tokenBalances && displayBalanceInfo("Balance", tokenBalances, tokenBalances.length)}</div>
             </div>
         </div>
         

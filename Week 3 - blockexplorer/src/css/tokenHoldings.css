@@ -7,7 +7,7 @@
 .balances {
     display: flex;
     flex-direction: row;
-    gap: 40%;
+    gap: 20%;
 
     align-content: flex-start;
     align-items: center;
